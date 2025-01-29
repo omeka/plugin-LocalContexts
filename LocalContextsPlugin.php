@@ -32,7 +32,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         'initialize',
         'define_acl',
         'define_routes',
-        'admin_appearance_settings_form',
+        'appearance_settings_form',
         'public_footer'
     );
 
@@ -110,16 +110,13 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 
     /**
      * Add LocalContext content to site appearance settings
-     * @param Omeka_Form $form
      */
-    public function hookAdminAppearanceSettingsForm($args)
+    public function hookAppearanceSettingsForm($args)
     {
         $logger = Zend_Registry::get('bootstrap')->getResource('Logger');
-        // $view = $args['view'];
-        // $form = $view->formInput();
         $form = $args['form'];
-        // $logger->log('testtest', Zend_Log::ERR);
-        
+
+
         // Combine available general settings projects with existing site settings projects
         $projects = get_option('lc_notices') ? unserialize(get_option('lc_notices')) : [];
         if (get_option('lc_content_sites')) {
@@ -144,17 +141,14 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                 }
             }
             $lcHtml .= '</div>';
-            // $lcArray['label'] = $lcHtml;
-            // $lcArray['value'] = json_encode($project);
-            // $optionArray[] = $lcArray;
-            $optionArray[json_encode($project)] = html_entity_decode($lcHtml);
+            $optionArray[serialize(json_encode($project))] = $lcHtml;
+            // $optionArray[serialize($project)] = $lcHtml;
         }
-        
-        $logger->log(print_r($optionArray, 1), Zend_Log::ERR);
 
         $form->addElement('select', 'lc_language', array(
             'label' => __('Local Contexts Language'),
             'description' => __('Only display content in selected language (Note: must already be generated and retrieved from LC Hub).'),
+            'value' => get_option('lc_language') ?: 'English',
             'multiOptions' => [
                 'English' => __('English'),
                 'French' => __('French'),
@@ -166,42 +160,12 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $form->addElement('multiCheckbox', 'lc_content_sites', array(
             'label' => __('Local Contexts value(s)'),
             'description' => __('Only display content in selected language (Note: must already be generated and retrieved from LC Hub).'),
+            'value' => get_option('lc_content_sites') ? unserialize(get_option('lc_content_sites')) : [],
             'multiOptions' => $optionArray,
             'label_class' => 'label admin',
-            // 'filters' => [
-            //     'HTMLEntities',
-            // ],
-            // 'label_options' => [
-            //     'disable_html_escape' => 'disable_html_escape',
-            // ],
-            // 'attributes' => [
-            //     'class' => 'label admin',
-            // ],
+            'class' => 'column check',
+            'escape' => false,
         ));
-        
-        $form->getElement('lc_content_sites')->getDecorator('label')->setOption('escape', false);
-        
-        // $form->add([
-        //     'name' => 'lc_content_sites',
-        //     'type' => MultiCheckbox::class,
-        //     'options' => [
-        //         'element_group' => 'local_contexts',
-        //         'label' => 'Local Contexts value(s)', // @translate
-        //         'info' => 'Local Contexts value(s) to apply to site footer.', // @translate
-        //         'multiOptions' => $optionArray,
-        //         'label_options' => [
-        //             'disable_html_escape' => true,
-        //         ],
-        //         'label_attributes' => [
-        //             'class' => 'label admin',
-        //         ],
-        //     ],
-        //     'attributes' => [
-        //         'value' => get_option('lc_content_sites'),
-        //         'class' => 'column check',
-        //         'required' => false,
-        //     ],
-        // ]);
 
         $form->addDisplayGroup(
             array(
@@ -210,7 +174,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             'local-contexts', array('legend' => __('Local Contexts Content'))
         );
 
-        echo $form->getDisplayGroup('local-contexts')->render();
+        return $form;
     }
 
     public function hookPublicFooter()
