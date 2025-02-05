@@ -4,12 +4,6 @@
  */
 
 queue_css_file('local-contexts');
-// $contentClass = isset($lc_content) ? "active" : "";
-// $assignedClass = isset($lc_assigned) ? "active" : "";
-// // If new content AND assigned content, make new content active tab
-// if (isset($lc_content) && isset($lc_assigned)) {
-//     $assignedClass = "";
-// }
 
 $head = array('bodyclass' => 'edit', 
               'title' => html_escape(__('Local Contexts | Assign Notices')));
@@ -40,7 +34,7 @@ jQuery(document).ready(function () {
     <?php if (isset($lc_content)): ?>
     <div id="assign">
     <fieldset class="set">
-        <div class="label"><?php echo __('Select content to make available for assignment to Sites, Items & Exhibits:'); ?></div>
+        <div class="label"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
             <?php foreach($lc_content as $notice_content): ?>
             <div class="label admin">
                 <div class="column check">

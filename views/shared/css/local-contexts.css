@@ -15,7 +15,7 @@ label {
     font-weight: bold;
 }
 
-.label > .name {
+label > .name {
     display: block;
     padding: 6px 2em 6px 6px;
     border-radius: 3px 3px 0 0;
@@ -68,12 +68,12 @@ label, .label {
     text-align: right !important;
 } 
 
-.label:nth-of-type(even) {
+label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
 }
 
-.label > .name, 
-.label > .description {
+label > .name,
+label > .description {
     margin-bottom: 6px;
 }
 
