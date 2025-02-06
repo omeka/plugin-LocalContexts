@@ -1,0 +1,25 @@
+<script>
+$(document).ready( function() {
+    <?php
+    $html = '';
+    foreach ($this->lc_content as $content) {
+        $html .= "<div class='label public-label'>";
+        foreach ($content as $key => $label) {
+            if (is_int($key)) {
+                $html .= "<div class='description'><img class='column image public-image' src='" . $label['image_url'] . "'>";
+                $html .= "<div class='column text public-text'><div class='name'><p>" . $label['name'] . "</p></div>";
+                $html .= "<div class='description'><p>" . $label['text'] . "</p></div></div></div>";
+            }
+        }
+        $html .= "</div>";
+        if (isset($content['project_url'])) {
+            $html .= "<nav class='project-link'><p>";
+            $html .= "<span class='lc'>" . __('Local Contexts project link: ') . "</span>";
+            $html .= "<a target='_blank' href=" . $content['project_url'] . ">" . $content['project_title'] . "</a>";
+            $html .= "</p></nav>";
+        }
+    }
+    ?>
+    $('footer').prepend("<?php echo $html ?>");
+});
+</script>

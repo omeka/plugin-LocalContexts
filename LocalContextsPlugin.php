@@ -105,10 +105,37 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookPublicFooter()
     {
-        echo "Henlo";
-        if ( get_option('lc_notices') ) {
-            $LCContent = unserialize(get_option('lc_notices'));
+        if (get_option('lc_content_site')) {
+            $projects = unserialize(get_option('lc_content_site'));
+            $localContextLanguage = get_option('lc_language');
             
+            $contentArray = array();
+            foreach ($projects as $project) {
+                $project = json_decode($project, true);
+                $projectArray = array();
+
+                if (isset($project['project_title'])) {
+                    $projectArray['project_title'] = $project['project_title'];
+                }
+                if (isset($project['project_url'])) {
+                    $projectArray['project_url'] = $project['project_url'];
+                }
+
+                foreach ($project as $key => $notice) {
+                    if (is_int($key)) {
+                        if (isset($notice['language']) && ($notice['language'] == $localContextLanguage)) {
+                            $projectArray[] = $notice;
+                        } elseif (!isset($notice['language']) && $localContextLanguage == 'English') {
+                            $projectArray[] = $notice;
+                        }
+                    }
+                }
+                $contentArray[] = $projectArray;
+            }
+            $view = get_view();
+            echo $view->partial('site-footer.phtml', [
+                'lc_content' => $contentArray,
+            ]);
         }
     }
 

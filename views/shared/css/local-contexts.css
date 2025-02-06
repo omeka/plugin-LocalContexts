@@ -32,6 +32,14 @@ label, .label {
     padding: 6px;
 }
 
+.public-label {
+    display: inline !important;
+}
+
+.public-label p {
+    padding-bottom: auto !important;
+}
+
 .column {
     padding: 6px;
     object-fit: contain;
@@ -57,16 +65,27 @@ label, .label {
     height: 125px;
 }
 
+.public-image {
+    height: 125px !important;
+}
+
 .text {
     width: 75%;
 }
 
+.public-text {
+    width: auto;
+}
+
 .project-link {
     display: block;
-    font-weight: bold;
     font-size: 16px;
     text-align: right !important;
-} 
+}
+
+span.lc {
+    font-weight: bold;
+}
 
 label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
