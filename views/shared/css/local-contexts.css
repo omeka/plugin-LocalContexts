@@ -36,8 +36,9 @@ label, .label {
     display: inline !important;
 }
 
-.public-label p {
+footer p {
     padding-bottom: auto !important;
+    float: auto !important;
 }
 
 .column {
@@ -67,10 +68,6 @@ label, .label {
 
 .public-image {
     height: 125px !important;
-}
-
-.text {
-    width: 75%;
 }
 
 .public-text {

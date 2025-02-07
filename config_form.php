@@ -48,10 +48,10 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 </div>
 
 <div class="field">
-    <div class="two columns alpha">
+    <div class="seven columns alpha">
         <label><?php echo __('Local Contexts public site value(s)'); ?></label>    
     </div>
-    <div class="inputs five columns omega" >
+    <div class="inputs seven columns omega" >
         <p class='explanation'><?php echo __('Local Contexts value(s) to apply to public site footer.'); ?>
         </p>
         <div class="input-block">
