@@ -32,11 +32,13 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         'define_routes',
         'config',
         'config_form',
+        'before_save_item',
         'public_footer'
     );
 
     protected $_filters = array(
         'admin_navigation_main',
+        'admin_items_form_tabs',
         'exhibit_layouts'
     );
 
@@ -103,6 +105,62 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         include 'config_form.php';
     }
 
+    // Save LC content selected in admin item form (below)
+    public function hookBeforeSaveItem($args)
+    {
+        if (!($post = $args['post'])) {
+            return;
+        }
+
+        $item = $args['record'];
+
+        $lcContentArray = isset($post['lc-content']) ? $post['lc-content'] : [];
+        $lcLanguage = isset($post['lc_content_language']) ? $post['lc_content_language'] : '';
+
+        $lcElementValueArray = [];
+        if ($lcContentArray) {
+            $elementID = $post['lc_content_element'];
+            $element = get_db()->getTable('Element')->find($elementID);
+            $elementSet = get_db()->getTable('ElementSet')->find($element->element_set_id);
+            foreach ($lcContentArray as $project) {
+                $project = json_decode($project, true);
+
+                foreach($project as $key => $content) {
+                    if (is_int($key)) {
+                        if (isset($content['language'])) {
+                            if ($content['language'] == $lcLanguage || $lcLanguage == 'All') {
+                                $lcElementValue = self::lcContentHtml($content);
+                                $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
+                            }
+                        } else if ($lcLanguage == 'English' || $lcLanguage == 'All') {
+                            // English LC content doesn't have language element
+                            $lcElementValue = self::lcContentHtml($content);
+                            $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
+                        }
+                    }
+                }
+
+                // Don't print project URL if element value array is empty
+                if (isset($project['project_url']) && $lcElementValueArray) {
+                    $projectLink = '<a href=' . $project['project_url'] . '>' . $project['project_title'] . '</a>';
+                    $lcElementValueArray[] = ['text' => $projectLink, 'html' => true];
+                }
+            }
+
+            $elementTexts = array(
+                $elementSet->name => array(
+                    $element->name => $lcElementValueArray
+                )
+            );
+
+            $item->addElementTextsByArray($elementTexts);
+
+        } else {
+            // Do nothing if no lc content selected
+            return;
+        }
+    }
+
     public function hookPublicFooter()
     {
         if (get_option('lc_content_site')) {
@@ -139,6 +197,41 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         }
     }
 
+    // Provide LC content to item add/update form
+    public function filterAdminItemsFormTabs($tabs, $args)
+    {
+        $item = $args['item'];
+        $tabs['Local Contexts'] = [];
+
+        $view = get_view();
+        if (get_option('lc_content_site')) {
+			$projects = unserialize(get_option('lc_notices'));
+            foreach ($projects as $project) {
+                $contentArray[] = $project;
+            }
+
+            $elementTable = get_db()->getTable('Element');
+            $elementData = $elementTable->findPairsForSelectForm();
+
+            $languageData = [
+                'All' => __('All available languages'),
+                'English' => __('English'),
+                'French' => __('French'),
+                'Spanish' => __('Spanish'),
+                'Māori' => __('Māori'),
+            ];
+
+			$tabs['Local Contexts'] = $view->partial('lc-item-edit.phtml', [
+	            'item' => $item,
+                'lc_content' => $contentArray,
+                'element_data' => $elementData,
+                'language_data' => $languageData,
+	        ]);
+        }
+
+        return $tabs;
+    }
+
     /**
      * LocalContexts admin_navigation_main filter.
      *
@@ -169,5 +262,25 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             'description' => __('Embed Local Contexts content.')
         );
         return $layouts;
+    }
+
+    public function lcContentHtml($content)
+    {
+        if ($content['image_url']) {
+            $html = sprintf(
+                "<div class='label'><img class='column image' src='%s'><div class='column text'>
+                <div class='name'>%s</div><div class='description'>%s</div></div></div>",
+                __($content['image_url']),
+                __($content['name']),
+                __($content['text']),
+            );
+        } else {
+            $html = sprintf(
+                "<div class='column text'><div class='name'>%s</div><div class='description'>%s</div></div>",
+                __($content['name']),
+                __($content['text']),
+            );
+        }
+        return $html;
     }
 }

@@ -32,6 +32,10 @@ label, .label {
     padding: 6px;
 }
 
+.label:nth-of-type(even) {
+    background: rgba(0,0,0,.04);
+}
+
 .public-label {
     display: inline !important;
 }
@@ -82,10 +86,6 @@ footer p {
 
 span.lc {
     font-weight: bold;
-}
-
-label:nth-of-type(even) {
-    background: rgba(0,0,0,.04);
 }
 
 label > .name,
