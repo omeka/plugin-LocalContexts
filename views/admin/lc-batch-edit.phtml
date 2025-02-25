@@ -1,0 +1,22 @@
+<fieldset id="item-local-contexts-fields">
+<h2><?php echo __('Local Contexts'); ?></h2>
+<p class='explanation'><?php echo __('Assign selected Local Contexts value(s) to selected metadata element in selected language(s)'); ?>
+<div class="field">
+    <label class="two columns alpha"><?php echo __('Metadata element'); ?></label>
+    <div class="inputs five columns omega">
+        <?php echo $this->formSelect('custom[lc_content_element]', null, array(), $elementData); ?>
+    </div>
+</div>
+<div class="field">
+    <label class="two columns alpha"><?php echo __('Local Contexts language(s)'); ?></label>
+    <div class="inputs five columns omega">
+        <?php echo $this->formSelect('custom[lc_content_language]', null, array(), $lcLanguageOptions); ?>
+    </div>
+</div>
+<div class="field">
+    <label class="seven columns alpha"><?php echo __('Local Contexts value(s)'); ?></label>
+    <div class="inputs seven columns omega">
+        <?php echo $this->formMultiCheckbox('custom[lc_content][]', null, ['class' => 'column check', 'escape' => false], $lcBatchContent, ''); ?>
+    </div>
+</div>
+</fieldset>

@@ -4,14 +4,14 @@
     </div>
     <div class="inputs localcontexts seven columns omega">
         <?php
-        echo "<p class='explanation'>" . __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s) from dropdown menus.') . "</p>";
+        echo "<p class='explanation'>" . __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s)') . "</p>";
         echo "<div class='input-block'>";
         echo $this->formSelect('lc_content_element', null, null, $element_data);
         echo $this->formSelect('lc_content_language', null, null, $language_data);
         $html = '';
         foreach ($this->lc_content as $notice_content) {
             $html .= "<div class='label admin'>";
-            $html .= "<div class='column check'><input type='checkbox' name='lc-content[]' value='" . __(json_encode($notice_content)) . "'></div>";
+            $html .= "<div class='column check'><input type='checkbox' name='lc_content[]' value='" . __(json_encode($notice_content)) . "'></div>";
             $html .= "<div class='column content'>";
             if (isset($notice_content['project_url'])) {
                 $html .= "<a class='name' target='_blank' href=" . $notice_content['project_url'] . ">" . $notice_content['project_title'] . "</a>";

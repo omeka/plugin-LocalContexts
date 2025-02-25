@@ -33,6 +33,8 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         'config',
         'config_form',
         'before_save_item',
+        'admin_items_batch_edit_form',
+        'items_batch_edit_custom',
         'public_footer'
     );
 
@@ -114,51 +116,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 
         $item = $args['record'];
 
-        $lcContentArray = isset($post['lc-content']) ? $post['lc-content'] : [];
-        $lcLanguage = isset($post['lc_content_language']) ? $post['lc_content_language'] : '';
-
-        $lcElementValueArray = [];
-        if ($lcContentArray) {
-            $elementID = $post['lc_content_element'];
-            $element = get_db()->getTable('Element')->find($elementID);
-            $elementSet = get_db()->getTable('ElementSet')->find($element->element_set_id);
-            foreach ($lcContentArray as $project) {
-                $project = json_decode($project, true);
-
-                foreach($project as $key => $content) {
-                    if (is_int($key)) {
-                        if (isset($content['language'])) {
-                            if ($content['language'] == $lcLanguage || $lcLanguage == 'All') {
-                                $lcElementValue = self::lcContentHtml($content);
-                                $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
-                            }
-                        } else if ($lcLanguage == 'English' || $lcLanguage == 'All') {
-                            // English LC content doesn't have language element
-                            $lcElementValue = self::lcContentHtml($content);
-                            $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
-                        }
-                    }
-                }
-
-                // Don't print project URL if element value array is empty
-                if (isset($project['project_url']) && $lcElementValueArray) {
-                    $projectLink = '<a href=' . $project['project_url'] . '>' . $project['project_title'] . '</a>';
-                    $lcElementValueArray[] = ['text' => $projectLink, 'html' => true];
-                }
-            }
-
-            $elementTexts = array(
-                $elementSet->name => array(
-                    $element->name => $lcElementValueArray
-                )
-            );
-
-            $item->addElementTextsByArray($elementTexts);
-
-        } else {
-            // Do nothing if no lc content selected
-            return;
-        }
+        self::LcContentAddToElement($item, $post);
     }
 
     public function hookPublicFooter()
@@ -195,6 +153,72 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                 'lc_content' => $contentArray,
             ]);
         }
+    }
+
+    /**
+     * Add custom fields to the item batch edit form.
+     */
+    public function hookAdminItemsBatchEditForm()
+    {
+        $lcSiteChecked = get_option('lc_content_site') ? unserialize(get_option('lc_content_site')) : [];
+        $elementTable = get_db()->getTable('Element');
+        $elementData = $elementTable->findPairsForSelectForm();
+        $lcLanguageOptions = [
+            'All' => __('All available languages'),
+            'English' => __('English'),
+            'French' => __('French'),
+            'Spanish' => __('Spanish'),
+            'Māori' => __('Māori'),
+        ];
+
+        // Combine available general settings projects with existing site settings projects
+        $projects = get_option('lc_notices') ? unserialize(get_option('lc_notices')) : [];
+        foreach($lcSiteChecked as $siteProject) {
+            $projects[] = json_decode($siteProject, true);
+        }
+
+        foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
+            // Save each project's content as single select value
+            $lcHtml = '<div class="column content">';
+            if (isset($project['project_url'])) {
+                $lcHtml .= "<a class='name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
+            }
+            foreach($project as $key => $content) {
+                if (is_int($key)) {
+                    $lcHtml .= '<div class="column description"><img class="column image" src="' . $content['image_url'] .
+                                     '"><div class="column text"><div class="name">' . $content['name'] .
+                                     (isset($content['language']) ? '<span class="language"> (' . $content['language'] . ')</span>' : '') . '</div>' .
+                                     '<div class="description">' . $content['text'] . '</div></div></div>';
+                }
+            }
+            $lcHtml .= '</div>';
+            $lcBatchContent[json_encode($project)] = $lcHtml;
+        }
+
+        $view = get_view();
+        echo $view->partial('lc-batch-edit.phtml', [
+            'elementData' => $elementData,
+            'lcLanguageOptions' => $lcLanguageOptions,
+            'lcBatchContent' => $lcBatchContent,
+        ]);
+    }
+
+    /**
+     * Process the item batch edit form.
+     *
+     * @param array $args
+     */
+    public function hookItemsBatchEditCustom($args)
+    {
+        $item = $args['item'];
+
+        if (!($custom = $args['custom'])) {
+            return;
+        }
+
+        self::LcContentAddToElement($item, $custom);
+        // Need to manually save batch edited items
+        $item->save();
     }
 
     // Provide LC content to item add/update form
@@ -262,6 +286,55 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             'description' => __('Embed Local Contexts content.')
         );
         return $layouts;
+    }
+
+    public function lcContentAddToElement($item, $post)
+    {
+        $lcContentArray = isset($post['lc_content']) ? $post['lc_content'] : [];
+        $lcLanguage = isset($post['lc_content_language']) ? $post['lc_content_language'] : '';
+
+        $lcElementValueArray = [];
+        if ($lcContentArray) {
+            $elementID = $post['lc_content_element'];
+            $element = get_db()->getTable('Element')->find($elementID);
+            $elementSet = get_db()->getTable('ElementSet')->find($element->element_set_id);
+            foreach ($lcContentArray as $project) {
+                $project = json_decode($project, true);
+
+                foreach($project as $key => $content) {
+                    if (is_int($key)) {
+                        if (isset($content['language'])) {
+                            if ($content['language'] == $lcLanguage || $lcLanguage == 'All') {
+                                $lcElementValue = self::lcContentHtml($content);
+                                $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
+                            }
+                        } else if ($lcLanguage == 'English' || $lcLanguage == 'All') {
+                            // English LC content doesn't have language element
+                            $lcElementValue = self::lcContentHtml($content);
+                            $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
+                        }
+                    }
+                }
+
+                // Don't print project URL if element value array is empty
+                if (isset($project['project_url']) && $lcElementValueArray) {
+                    $projectLink = '<a href=' . $project['project_url'] . '>' . $project['project_title'] . '</a>';
+                    $lcElementValueArray[] = ['text' => $projectLink, 'html' => true];
+                }
+            }
+
+            $elementTexts = array(
+                $elementSet->name => array(
+                    $element->name => $lcElementValueArray
+                )
+            );
+
+            $item->addElementTextsByArray($elementTexts);
+
+        } else {
+            // Do nothing if no lc content selected
+            return;
+        }
     }
 
     public function lcContentHtml($content)
