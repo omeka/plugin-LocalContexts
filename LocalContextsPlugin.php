@@ -49,7 +49,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         // Delete the plugin options
         delete_option('lc_project_id');
         delete_option('lc_notices');
-        delete_option('lc_language');
+        delete_option('lc_site_language');
         delete_option('lc_content_site');
     }
     
@@ -93,7 +93,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookConfig($args)
     {
         $post = $args['post'];
-        set_option('lc_language', $post['lc_language']);
+        set_option('lc_site_language', $post['lc_site_language']);
         if ($post['lc_content_site']) {
             set_option('lc_content_site', serialize($post['lc_content_site']));
         } else {
@@ -123,29 +123,32 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
     {
         if (get_option('lc_content_site')) {
             $projects = unserialize(get_option('lc_content_site'));
-            $localContextLanguage = get_option('lc_language');
+            $lcLanguage = get_option('lc_site_language');
             
             $contentArray = array();
             foreach ($projects as $project) {
                 $project = json_decode($project, true);
                 $projectArray = array();
 
-                if (isset($project['project_title'])) {
-                    $projectArray['project_title'] = $project['project_title'];
-                }
-                if (isset($project['project_url'])) {
-                    $projectArray['project_url'] = $project['project_url'];
-                }
-
-                foreach ($project as $key => $notice) {
+                foreach ($project as $key => $content) {
                     if (is_int($key)) {
-                        if (isset($notice['language']) && ($notice['language'] == $localContextLanguage)) {
-                            $projectArray[] = $notice;
-                        } elseif (!isset($notice['language']) && $localContextLanguage == 'English') {
-                            $projectArray[] = $notice;
+                        if (isset($content['language'])) {
+                            if ($content['language'] == $lcLanguage || $lcLanguage == 'All') {
+                                $projectArray[] = $content;
+                            }
+                        } else if ($lcLanguage == 'English' || $lcLanguage == 'All') {
+                            // English LC content doesn't have language element
+                            $projectArray[] = $content;
                         }
                     }
                 }
+
+                // Don't print project URL if element value array is empty
+                if (isset($project['project_url']) && $projectArray) {
+                    $projectArray['project_url'] = $project['project_url'];
+                    $projectArray['project_title'] = $project['project_title'];
+                }
+
                 $contentArray[] = $projectArray;
             }
             $view = get_view();
@@ -228,7 +231,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $tabs['Local Contexts'] = [];
 
         $view = get_view();
-        if (get_option('lc_content_site')) {
+        if (get_option('lc_notices')) {
 			$projects = unserialize(get_option('lc_notices'));
             foreach ($projects as $project) {
                 $contentArray[] = $project;

@@ -77,7 +77,20 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
                     $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key'], trim($projectID));
                 }
             } else {
+                // Display 'Open to Collaborate' notice along with user's projects
                 $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
+                $projectsURL = 'https://sandbox.localcontextshub.org/api/v2/projects/';
+                $this->client->setUri($projectsURL);
+                $this->client->setHeaders(['x-api-key' => $_POST['lc_api_key']]);
+                $response = $this->client->request('GET');
+
+                if ($response->isSuccessful()) {
+                    $projectsMetadata = json_decode($response->getBody(), true);
+                    foreach ($projectsMetadata['results'] as $project) {
+                        $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key'], $project['unique_id']);
+                    }
+                }
+
             }
             $contentArray = array_filter($contentArray);
             // Pass API key to assign form to retain assign content after submission

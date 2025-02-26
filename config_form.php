@@ -1,7 +1,8 @@
 <?php
-$lcLanguage = get_option('lc_language') ?: 'English';
+$lcLanguage = get_option('lc_site_language') ?: 'English';
 $lcSiteChecked = get_option('lc_content_site') ? unserialize(get_option('lc_content_site')) : [];
 $lcLanguageOptions = [
+    'All' => __('All available languages'),
     'English' => __('English'),
     'French' => __('French'),
     'Spanish' => __('Spanish'),
@@ -41,7 +42,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
         <p class='explanation'><?php echo __('Only display content in selected language (Note: must already be generated and retrieved from LC Hub).'); ?>
         </p>
         <div class="input-block">
-            <?php echo $view->formSelect('lc_language', $lcLanguage, null, $lcLanguageOptions); ?>
+            <?php echo $view->formSelect('lc_site_language', $lcLanguage, null, $lcLanguageOptions); ?>
         </div>
 
     </div>
