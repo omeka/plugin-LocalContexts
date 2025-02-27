@@ -27,9 +27,9 @@ label > .name {
 }
 
 label, .label {
+    font-weight: normal !important;
     display: flex !important;
     flex-direction: row;
-    padding: 6px;
 }
 
 label:nth-of-type(even), .label:nth-of-type(even) {
@@ -38,11 +38,6 @@ label:nth-of-type(even), .label:nth-of-type(even) {
 
 .public-label {
     display: inline !important;
-}
-
-footer p {
-    padding-bottom: auto !important;
-    float: auto !important;
 }
 
 .column {
@@ -60,18 +55,18 @@ footer p {
     width: 93%;
 }
 
+.text {
+    color: default !important;
+}
+
 .description {
     display: flex;
     flex-direction: row;
 }
 
 .image {
-    width: 25%;
-    height: 125px;
-}
-
-.public-image {
     height: 125px !important;
+    border: 0px !important;
 }
 
 .public-text {

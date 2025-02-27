@@ -149,7 +149,9 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                     $projectArray['project_title'] = $project['project_title'];
                 }
 
-                $contentArray[] = $projectArray;
+                if ($projectArray) {
+                    $contentArray[] = $projectArray;
+                }
             }
             $view = get_view();
             echo $view->partial('site-footer.phtml', [

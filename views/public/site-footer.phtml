@@ -7,8 +7,8 @@ $(document).ready( function() {
         foreach ($content as $key => $label) {
             if (is_int($key)) {
                 $html .= "<div class='description'><img class='column image public-image' src='" . $label['image_url'] . "'>";
-                $html .= "<div class='column text public-text'><div class='name'><p>" . $label['name'] . "</p></div>";
-                $html .= "<div class='description'><p>" . $label['text'] . "</p></div></div></div>";
+                $html .= "<div class='column text public-text'><div class='name'>" . $label['name'] . "</div>";
+                $html .= "<div class='description'>" . $label['text'] . "</div></div></div>";
             }
         }
         $html .= "</div>";
@@ -16,7 +16,7 @@ $(document).ready( function() {
             $html .= "<nav class='project-link'><p>";
             $html .= "<span class='lc'>" . __('Local Contexts project link: ') . "</span>";
             $html .= "<a target='_blank' href=" . $content['project_url'] . ">" . $content['project_title'] . "</a>";
-            $html .= "</p></nav>";
+            $html .= "</nav>";
         }
     }
     ?>
