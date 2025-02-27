@@ -48,6 +48,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     </div>
 </div>
 
+<?php if (isset($lcSiteOptions)): ?>
 <div class="field">
     <div class="seven columns alpha">
         <label><?php echo __('Local Contexts public site value(s)'); ?></label>    
@@ -61,3 +62,4 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 
     </div>
 </div>
+<?php endif; ?>
