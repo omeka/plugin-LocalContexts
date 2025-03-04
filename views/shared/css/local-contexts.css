@@ -6,12 +6,6 @@
 .local-contexts-group {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.local-context-group {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .local-context {
@@ -28,7 +22,7 @@
     line-height: unset;
 }
 
-#local-contexts .name {
+.local-context .name {
     display: block;
     font-weight: bold;
 }
@@ -44,31 +38,26 @@
     font-weight: normal !important;
 }
 
-#local-contexts label, 
-#local-contexts .label {
+#local-contexts label {
     font-weight: normal !important;
     display: flex !important;
     flex-direction: row;
 }
 
-#local-contexts label:nth-of-type(even), 
-#local-contexts .label:nth-of-type(even) {
+fieldset.set label:nth-of-type(even), 
+fieldset.set .label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
+    margin: 1rem 0;
 }
 
 .public-label {
     display: inline !important;
 }
 
-.column {
-    padding: 6px;
-    object-fit: contain;
-    align-self: center;
-}
-
 .check {
     width: 5% !important;
     text-align: center !important;
+    padding: 1rem;
 }
 
 .content {
@@ -77,11 +66,6 @@
 
 .text {
     color: default !important;
-}
-
-.description {
-    display: flex;
-    flex-direction: row;
 }
 
 .local-context .image {
@@ -94,12 +78,22 @@
     width: auto;
 }
 
+.project {
+    display: flex;
+}
+
 .project-link {
     display: block;
     width: 100%;
     font-size: 16px;
     text-align: right !important;
-    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.project-name {
+    padding: 1rem;
+    font-weight: bold;
+    display: block;
 }
 
 .project-link:not(:last-child) {
@@ -120,7 +114,7 @@ label > .description {
 }
 
 @media screen and (min-width: 1200px) {
-    .local-context {
+    footer #local-contexts .local-context {
         width: 50%;
     }
 }
