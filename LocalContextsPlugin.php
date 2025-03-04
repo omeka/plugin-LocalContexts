@@ -183,24 +183,17 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         }
 
         foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
+            $view = get_view();
             // Save each project's content as single select value
             $lcHtml = '<div class="column content">';
             if (isset($project['project_url'])) {
-                $lcHtml .= "<a class='name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
+                $lcHtml .= "<a class='project-name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
             }
-            foreach($project as $key => $content) {
-                if (is_int($key)) {
-                    $lcHtml .= '<div class="column description"><img class="column image" src="' . $content['image_url'] .
-                                     '"><div class="column text"><div class="name">' . $content['name'] .
-                                     (isset($content['language']) ? '<span class="language"> (' . $content['language'] . ')</span>' : '') . '</div>' .
-                                     '<div class="description">' . $content['text'] . '</div></div></div>';
-                }
-            }
+            $lcHtml .= $view->partial('localcontexts/projects.phtml', ['content' => $project]);
             $lcHtml .= '</div>';
             $lcBatchContent[json_encode($project)] = $lcHtml;
         }
 
-        $view = get_view();
         echo $view->partial('lc-batch-edit.phtml', [
             'elementData' => $elementData,
             'lcLanguageOptions' => $lcLanguageOptions,

@@ -34,33 +34,17 @@ jQuery(document).ready(function () {
     <?php if (isset($lc_content)): ?>
     <div id="assign">
     <fieldset class="set">
-        <div class="label"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
+        <div class="instructions"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
             <?php foreach($lc_content as $notice_content): ?>
-            <div class="label admin">
+            <div class="local-contexts-input label admin">
                 <div class="column check">
                     <input name="lc-notice[]" type="checkbox" value="<?php echo html_escape(json_encode($notice_content)); ?>">
                 </div>
                 <div class="column content">
                     <?php if (isset($notice_content['project_url'])): ?>
-                        <a class="name" target="_blank" href="<?php echo html_escape($notice_content['project_url']); ?>"><?php echo html_escape($notice_content['project_title']); ?></a>
+                        <a class="project-name" target="_blank" href="<?php echo html_escape($notice_content['project_url']); ?>"><?php echo html_escape($notice_content['project_title']); ?></a>
                     <?php endif; ?>
-                    <?php foreach($notice_content as $key => $content): ?>
-                        <?php if (is_int($key)): ?>
-                            <div class="description">
-                                <img class="column image" src="<?php echo html_escape($content['image_url']); ?>">
-                                <div class="column text">
-                                    <div class="name">
-                                        <?php
-                                        echo($content['name']);
-                                        if (isset($content['language'])) {
-                                            echo '<span class="language"> (' . html_escape($content['language']) . ')</span>';
-                                        }
-                                        ?></div>
-                                    <div class="description"><?php echo html_escape($content['text']); ?></div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $notice_content]); ?>  
                 </div>
             </div>
             <?php endforeach; ?>
@@ -71,9 +55,9 @@ jQuery(document).ready(function () {
     <?php if (isset($lc_assigned)): ?>
     <div id="remove">
     <fieldset class="set">
-        <div class="label"><?php echo __('Select existing content to remove from assignment list (content already assigned to Sites, Items & Exhibits must be manually removed):'); ?></div>
+        <div class="instructions"><?php echo __('Select existing content to remove from assignment list (content already assigned to Sites, Items & Exhibits must be manually removed):'); ?></div>
         <?php foreach($lc_assigned as $remove_content): ?>
-        <div class="label admin">
+        <div class="local-contexts-input label admin">
             <div class="column check">
                 <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape(json_encode($remove_content)); ?>">
             </div>
@@ -81,23 +65,7 @@ jQuery(document).ready(function () {
                 <?php if (isset($remove_content['project_url'])): ?>
                     <a class="name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
                 <?php endif; ?>
-                <?php foreach($remove_content as $key => $content): ?>
-                    <?php if (is_int($key)): ?>
-                        <div class="description">
-                            <img class="column image" src="<?php echo html_escape($content['image_url']); ?>">
-                            <div class="column text">
-                                <div class="name">
-                                    <?php
-                                    echo html_escape($content['name']);
-                                    if (isset($content['language'])) {
-                                        echo '<span class="language"> (' . html_escape($content['language']) . ')</span>';
-                                    }
-                                    ?></div>
-                                <div class="description"><?php echo html_escape($content['text']); ?></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $remove_content]); ?>  
             </div>
         </div>
         <?php endforeach; ?>

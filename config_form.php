@@ -17,18 +17,11 @@ foreach($lcSiteChecked as $siteProject) {
 
 foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     // Save each project's content as single select value
-    $lcHtml = '<div class="column content">';
+    $lcHtml = '<div class="project column content">';
     if (isset($project['project_url'])) {
-        $lcHtml .= "<a class='name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
+        $lcHtml .= "<a class='project-name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
     }
-    foreach($project as $key => $content) {
-        if (is_int($key)) {
-            $lcHtml .= '<div class="column description"><img class="column image" src="' . $content['image_url'] .
-                             '"><div class="column text"><div class="name">' . $content['name'] .
-                             (isset($content['language']) ? '<span class="language"> (' . $content['language'] . ')</span>' : '') . '</div>' .
-                             '<div class="description">' . $content['text'] . '</div></div></div>';
-        }
-    }
+    $lcHtml .= $view->partial('localcontexts/projects.phtml', ['content' => $project]);
     $lcHtml .= '</div>';
     $lcSiteOptions[json_encode($project)] = $lcHtml;
 }
@@ -50,13 +43,12 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 
 <?php if (isset($lcSiteOptions)): ?>
 <div class="field">
-    <div class="seven columns alpha">
+    <div class="two columns alpha">
         <label><?php echo __('Local Contexts public site value(s)'); ?></label>    
     </div>
-    <div class="inputs seven columns omega" >
-        <p class='explanation'><?php echo __('Local Contexts value(s) to apply to public site footer.'); ?>
-        </p>
-        <div class="input-block">
+    <div class="inputs five columns omega" >
+        <p class='explanation'><?php echo __('Local Contexts value(s) to apply to public site footer.'); ?></p>
+        <div class="input-block local-contexts-multicheckbox">
             <?php echo $view->formMultiCheckbox('lc_content_site', $lcSiteChecked, ['class' => 'column check', 'escape' => false], $lcSiteOptions, ''); ?>
         </div>
 
