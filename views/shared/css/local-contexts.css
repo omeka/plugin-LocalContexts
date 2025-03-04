@@ -3,83 +3,49 @@
     overflow: hidden;
 }
 
-.local-contexts-group {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.local-context {
+.local-contexts-notice {
     display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
     padding: 1rem;
 }
 
-#local-contexts .inputs, 
-#local-contexts .inputs.localcontexts {
-    flex-wrap: wrap;
-    align-items: flex-start;
-    line-height: unset;
-}
-
-.local-context .name {
+.local-contexts-notice .notice-name {
     display: block;
     font-weight: bold;
 }
 
-#local-contexts label > .name {
-    display: block;
-    padding: 6px 2em 6px 6px;
-    border-radius: 3px 3px 0 0;
-    border-top-width: 1px;
-}
-
-#local-contexts .language {
+.local-contexts-notice .language {
     font-weight: normal !important;
 }
 
-#local-contexts label {
-    font-weight: normal !important;
-    display: flex !important;
-    flex-direction: row;
+.local-contexts-input, 
+.local-contexts-multicheckbox label {
+    display: flex;
+    align-items: flex-start;
 }
 
-fieldset.set label:nth-of-type(even), 
-fieldset.set .label:nth-of-type(even) {
+.local-contexts-multicheckbox label input[type="checkbox"] {
+    margin: 1rem;
+}
+
+.local-contexts-input:nth-of-type(even), 
+.local-contexts-multicheckbox label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
     margin: 1rem 0;
 }
 
-.public-label {
-    display: inline !important;
-}
-
-.check {
+.local-contexts-input .check {
     width: 5% !important;
     text-align: center !important;
-    padding: 1rem;
+    margin: 1rem !important;
+    align-self: flex-start;
 }
 
-.content {
-    width: 93%;
-}
-
-.text {
-    color: default !important;
-}
-
-.local-context .image {
+.local-contexts-notice .image {
     height: 75px;
     border: 0px !important;
     margin-right: 1rem;
-}
-
-.public-text {
-    width: auto;
-}
-
-.project {
-    display: flex;
 }
 
 .project-link {
@@ -104,17 +70,13 @@ span.lc {
     font-weight: bold;
 }
 
-label > .name,
-label > .description {
-    margin-bottom: 6px;
-}
-
-.label > .name {
-    padding: 0 2rem 0 0;
-}
-
 @media screen and (min-width: 1200px) {
-    footer #local-contexts .local-context {
+    footer .local-contexts-project {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    footer .local-contexts-notice {
         width: 50%;
     }
 }
