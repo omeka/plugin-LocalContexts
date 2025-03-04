@@ -1,25 +1,35 @@
+<?php $localContextsContent = $this->lc_content; ?>
+
+<?php if (count($localContextsContent) > 0): ?>
+<div id="local-contexts" class="default">
+<?php foreach ($this->lc_content as $content): ?>
+    <div class='local-contexts-group'>
+    <?php foreach ($content as $key => $label): ?>
+        <?php if (is_int($key)): ?>
+            <div class="local-context">
+                <img class='image public-image' src='<?php echo $label['image_url']; ?>'>
+                <div class='text public-text'>
+                    <div class='name'><?php echo $label['name']; ?></div>
+                    <div class='description'><?php echo $label['text']; ?></div>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    </div>
+    <?php if (isset($content['project_url'])): ?>
+        <nav class='project-link'>
+            <p>
+                <span class='lc'><?php echo __('Local Contexts project link: '); ?></span>
+                <a target='_blank' href="<?php echo $content['project_url']; ?>"><?php echo $content['project_title']; ?></a>
+            </p>
+        </nav>
+    <?php endif; ?>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>
+
 <script>
-$(document).ready( function() {
-    <?php
-    $html = '';
-    foreach ($this->lc_content as $content) {
-        $html .= "<div class='label public-label'>";
-        foreach ($content as $key => $label) {
-            if (is_int($key)) {
-                $html .= "<div class='description'><img class='column image public-image' src='" . $label['image_url'] . "'>";
-                $html .= "<div class='column text public-text'><div class='name'>" . $label['name'] . "</div>";
-                $html .= "<div class='description'>" . $label['text'] . "</div></div></div>";
-            }
-        }
-        $html .= "</div>";
-        if (isset($content['project_url'])) {
-            $html .= "<nav class='project-link'><p>";
-            $html .= "<span class='lc'>" . __('Local Contexts project link: ') . "</span>";
-            $html .= "<a target='_blank' href=" . $content['project_url'] . ">" . $content['project_title'] . "</a>";
-            $html .= "</nav>";
-        }
-    }
-    ?>
-    $('footer').prepend("<?php echo $html ?>");
+jQuery(document).ready(function() {
+    jQuery('#local-contexts').prependTo('footer').removeClass('default');
 });
 </script>

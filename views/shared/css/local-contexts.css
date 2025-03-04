@@ -1,38 +1,58 @@
-label {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+#local-contexts.default {
+    height: 0;
+    overflow: hidden;
 }
 
-.inputs, .inputs.localcontexts {
+.local-contexts-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.local-context-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.local-context {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+#local-contexts .inputs, 
+#local-contexts .inputs.localcontexts {
     flex-wrap: wrap;
     align-items: flex-start;
     line-height: unset;
 }
 
-.name {
+#local-contexts .name {
     display: block;
     font-weight: bold;
 }
 
-label > .name {
+#local-contexts label > .name {
     display: block;
     padding: 6px 2em 6px 6px;
     border-radius: 3px 3px 0 0;
     border-top-width: 1px;
 }
 
-.language {
+#local-contexts .language {
     font-weight: normal !important;
 }
 
-label, .label {
+#local-contexts label, 
+#local-contexts .label {
     font-weight: normal !important;
     display: flex !important;
     flex-direction: row;
 }
 
-label:nth-of-type(even), .label:nth-of-type(even) {
+#local-contexts label:nth-of-type(even), 
+#local-contexts .label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
 }
 
@@ -64,9 +84,10 @@ label:nth-of-type(even), .label:nth-of-type(even) {
     flex-direction: row;
 }
 
-.image {
-    height: 125px !important;
+.local-context .image {
+    height: 75px;
     border: 0px !important;
+    margin-right: 1rem;
 }
 
 .public-text {
@@ -75,8 +96,14 @@ label:nth-of-type(even), .label:nth-of-type(even) {
 
 .project-link {
     display: block;
+    width: 100%;
     font-size: 16px;
     text-align: right !important;
+    margin-bottom: 1rem;
+}
+
+.project-link:not(:last-child) {
+    border-bottom: 1px solid #ccc;
 }
 
 span.lc {
@@ -90,4 +117,10 @@ label > .description {
 
 .label > .name {
     padding: 0 2rem 0 0;
+}
+
+@media screen and (min-width: 1200px) {
+    .local-context {
+        width: 50%;
+    }
 }
