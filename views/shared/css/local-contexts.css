@@ -1,93 +1,82 @@
-label {
-    display: inline-flex;
+#local-contexts.default {
+    height: 0;
+    overflow: hidden;
+}
+
+.local-contexts-notice {
+    display: flex;
     flex-wrap: nowrap;
     align-items: flex-start;
+    padding: 1rem;
 }
 
-.inputs, .inputs.localcontexts {
-    flex-wrap: wrap;
-    align-items: flex-start;
-    line-height: unset;
-}
-
-.name {
+.local-contexts-notice .notice-name {
     display: block;
     font-weight: bold;
 }
 
-label > .name {
-    display: block;
-    padding: 6px 2em 6px 6px;
-    border-radius: 3px 3px 0 0;
-    border-top-width: 1px;
-}
-
-.language {
+.local-contexts-notice .language {
     font-weight: normal !important;
 }
 
-label, .label {
-    font-weight: normal !important;
-    display: flex !important;
-    flex-direction: row;
+.local-contexts-input, 
+.local-contexts-multicheckbox label {
+    display: flex;
+    align-items: flex-start;
 }
 
-label:nth-of-type(even), .label:nth-of-type(even) {
+.local-contexts-multicheckbox label input[type="checkbox"] {
+    margin: 1rem;
+}
+
+.local-contexts-input:nth-of-type(even), 
+.local-contexts-multicheckbox label:nth-of-type(even) {
     background: rgba(0,0,0,.04);
+    margin: 1rem 0;
 }
 
-.public-label {
-    display: inline !important;
-}
-
-.column {
-    padding: 6px;
-    object-fit: contain;
-    align-self: center;
-}
-
-.check {
+.local-contexts-input .check {
     width: 5% !important;
     text-align: center !important;
+    margin: 1rem !important;
+    align-self: flex-start;
 }
 
-.content {
-    width: 93%;
-}
-
-.text {
-    color: default !important;
-}
-
-.description {
-    display: flex;
-    flex-direction: row;
-}
-
-.image {
-    height: 125px !important;
+.local-contexts-notice .image {
+    height: 75px;
     border: 0px !important;
-}
-
-.public-text {
-    width: auto;
+    margin-right: 1rem;
 }
 
 .project-link {
     display: block;
+    width: 100%;
     font-size: 16px;
     text-align: right !important;
+    padding: 1rem;
+}
+
+.project-name {
+    padding: 1rem;
+    font-weight: bold;
+    display: block;
+}
+
+.project-link:not(:last-child) {
+    border-bottom: 1px solid #ccc;
 }
 
 span.lc {
     font-weight: bold;
 }
 
-label > .name,
-label > .description {
-    margin-bottom: 6px;
-}
+@media screen and (min-width: 1200px) {
+    footer .local-contexts-project {
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-.label > .name {
-    padding: 0 2rem 0 0;
+    footer .local-contexts-notice {
+        width: 50%;
+    }
 }
