@@ -17,12 +17,10 @@
     <?php endforeach; ?>
     </div>
     <?php if (isset($content['project_url'])): ?>
-        <nav class='project-link'>
-            <p>
+        <div class='project-link'>
                 <span class='lc'><?php echo __('Local Contexts project link: '); ?></span>
                 <a target='_blank' href="<?php echo $content['project_url']; ?>"><?php echo $content['project_title']; ?></a>
-            </p>
-        </nav>
+        </div>
     <?php endif; ?>
 <?php endforeach; ?>
 </div>
