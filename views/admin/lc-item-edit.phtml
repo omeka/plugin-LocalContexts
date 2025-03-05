@@ -1,23 +1,35 @@
+<p class='explanation'><?php echo __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s)'); ?></p>
 <div class="field">
-    <div class="field-meta seven columns alpha">
-        <label><?php echo __('Local Contexts Notices'); ?></label>
+    <div class="field-meta two columns alpha">
+        <label for="lc_content_element"><?php echo __('Element'); ?></label>
     </div>
-    <div class="inputs localcontexts seven columns omega">
-        <p class='explanation'><?php echo __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s)'); ?></p>
-        <div class='input-block'>
+    <div class="inputs five columns omega">
         <?php echo $this->formSelect('lc_content_element', null, null, $element_data); ?>
+    </div>
+</div>
+<div class="field">
+    <div class="field-meta two columns alpha">
+        <label for="lc_content_language"><?php echo __('Language'); ?></label>
+    </div>
+    <div class="inputs five columns omega">
         <?php echo $this->formSelect('lc_content_language', null, null, $language_data); ?>
-        <?php foreach ($this->lc_content as $notice_content): ?>
-            <div class='local-contexts-input'>
-                <div class='column check'><input type='checkbox' name='lc_content[]' value='<?php echo  __(json_encode($notice_content)); ?>'></div>
-                <div class='column content'>
-                <?php if (isset($notice_content['project_url'])): ?>
-                    <a class='name' target='_blank' href=" . $notice_content['project_url'] . "><?php echo $notice_content['project_title']; ?></a>
-                <?php endif; ?>
-                <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
-                </div>
+    </div>
+</div>
+<div class="field">
+    <div class="field-meta">
+        <label id="local-context-notice-label"><?php echo __('Local Context Notice'); ?></label>
+    </div>
+    <div class="inputs local-contexts-multicheckbox five columns omega">
+    <?php foreach ($this->lc_content as $notice_content): ?>
+        <div class='local-contexts-multicheckbox-row'>
+            <input type='checkbox' name='lc_content[]' value='<?php echo  __(json_encode($notice_content)); ?>' aria-labelledby="local-context-notice-label">
+            <div class='column content'>
+            <?php if (isset($notice_content['project_url'])): ?>
+                <a class='name' target='_blank' href=" . $notice_content['project_url'] . "><?php echo $notice_content['project_title']; ?></a>
+            <?php endif; ?>
+            <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
             </div>
-        <?php endforeach; ?>
         </div>
+    <?php endforeach; ?>
     </div>
 </div>
