@@ -9,7 +9,7 @@
         <?php echo $this->formSelect('lc_content_language', null, null, $language_data); ?>
         <?php foreach ($this->lc_content as $notice_content): ?>
             <div class='local-contexts-input'>
-                <div class='column check'><input type='checkbox' name='lc_content[]' value='" . __(json_encode($notice_content)) . "'></div>
+                <div class='column check'><input type='checkbox' name='lc_content[]' value='<?php echo  __(json_encode($notice_content)); ?>'></div>
                 <div class='column content'>
                 <?php if (isset($notice_content['project_url'])): ?>
                     <a class='name' target='_blank' href=" . $notice_content['project_url'] . "><?php echo $notice_content['project_title']; ?></a>
