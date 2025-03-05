@@ -3,7 +3,7 @@
 <?php if (count($localContextsContent) > 0): ?>
 <div id="local-contexts" class="default">
 <?php foreach ($localContextsContent as $content): ?>
-    <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $content]); ?>
+    <?php echo $this->partial('localcontexts/project.phtml', ['content' => $content]); ?>
     <?php if (isset($content['project_url'])): ?>
         <div class='project-link'>
             <span class='lc'><?php echo __('Local Contexts project link: '); ?></span>
