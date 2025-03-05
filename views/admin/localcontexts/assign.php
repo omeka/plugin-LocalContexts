@@ -35,8 +35,9 @@ jQuery(document).ready(function () {
     <div id="assign">
     <fieldset class="set">
         <div class="instructions"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
+        <div class="local-contexts-multicheckbox">
             <?php foreach($lc_content as $notice_content): ?>
-            <div class="local-contexts-input label admin">
+            <div class="local-contexts-multicheckbox-row">
                 <div class="column check">
                     <input name="lc-notice[]" type="checkbox" value="<?php echo html_escape(json_encode($notice_content)); ?>">
                 </div>
@@ -48,6 +49,7 @@ jQuery(document).ready(function () {
                 </div>
             </div>
             <?php endforeach; ?>
+        </div>
     </fieldset>
     </div>
     <?php endif; ?>
@@ -56,19 +58,21 @@ jQuery(document).ready(function () {
     <div id="remove">
     <fieldset class="set">
         <div class="instructions"><?php echo __('Select existing content to remove from assignment list (content already assigned to Sites, Items & Exhibits must be manually removed):'); ?></div>
-        <?php foreach($lc_assigned as $remove_content): ?>
-        <div class="local-contexts-input label admin">
-            <div class="column check">
-                <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape(json_encode($remove_content)); ?>">
+        <div class="local-contexts-multicheckbox">
+            <?php foreach($lc_assigned as $remove_content): ?>
+            <div class="local-contexts-multicheckbox-row">
+                <div class="column check">
+                    <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape(json_encode($remove_content)); ?>">
+                </div>
+                <div class="column content">
+                    <?php if (isset($remove_content['project_url'])): ?>
+                        <a class="name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
+                    <?php endif; ?>
+                    <?php echo $this->partial('localcontexts/project.phtml', ['content' => $remove_content]); ?>  
+                </div>
             </div>
-            <div class="column content">
-                <?php if (isset($remove_content['project_url'])): ?>
-                    <a class="name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
-                <?php endif; ?>
-                <?php echo $this->partial('localcontexts/project.phtml', ['content' => $remove_content]); ?>  
-            </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
     </fieldset>
     </div>
     <?php endif; ?>

@@ -23,25 +23,23 @@
     font-weight: normal !important;
 }
 
-.local-contexts-input, 
-.local-contexts-multicheckbox label {
+.local-contexts-multicheckbox {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.local-contexts-multicheckbox > label,
+.local-contexts-multicheckbox .local-contexts-multicheckbox-row {
     display: flex;
     align-items: flex-start;
 }
 
-.local-contexts-multicheckbox label input[type="checkbox"] {
-    margin: 1rem;
-}
-
-.local-contexts-input:nth-of-type(even), 
-.local-contexts-multicheckbox label:nth-of-type(even) {
+.local-contexts-multicheckbox .local-contexts-multicheckbox-row:nth-of-type(odd),
+.local-contexts-multicheckbox > label:nth-of-type(odd) {
     background: rgba(0,0,0,.04);
-    margin: 1rem 0;
 }
 
-.local-contexts-input .check {
-    width: 5% !important;
-    text-align: center !important;
+.local-contexts-multicheckbox input[type="checkbox"] {
     margin: 1rem !important;
     align-self: flex-start;
 }
