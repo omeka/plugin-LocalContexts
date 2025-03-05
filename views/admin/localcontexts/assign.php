@@ -63,7 +63,7 @@ jQuery(document).ready(function () {
             </div>
             <div class="column content">
                 <?php if (isset($remove_content['project_url'])): ?>
-                    <a class="name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
+                    <a class="project-name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
                 <?php endif; ?>
                 <?php echo $this->partial('localcontexts/project.phtml', ['content' => $remove_content]); ?>  
             </div>

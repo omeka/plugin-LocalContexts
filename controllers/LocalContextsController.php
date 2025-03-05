@@ -97,6 +97,9 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             $this->view->lc_api_key = $_POST['lc_api_key'];
         }
 
+        // Remove LC content that is already assigned
+        $contentArray = array_udiff($contentArray, $assignedArray, function($a, $b) { return $a <=> $b; });
+
         // Redirect to index page if no content to display
         if (empty($contentArray) && empty($assignedArray)) {
             $this->_helper->flashMessenger(__('No Local Contexts content to display!'));
@@ -106,8 +109,6 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         } else if (!empty($contentArray) && empty($assignedArray)) {
             $this->view->lc_content = $contentArray;
         } else {
-            // Remove LC content that is already assigned
-            $contentArray = array_udiff($contentArray, $assignedArray, function($a, $b) { return $a <=> $b; });
             $this->view->lc_content = $contentArray;
             $this->view->lc_assigned = $assignedArray;
         }
