@@ -44,7 +44,7 @@ jQuery(document).ready(function () {
                     <?php if (isset($notice_content['project_url'])): ?>
                         <a class="project-name" target="_blank" href="<?php echo html_escape($notice_content['project_url']); ?>"><?php echo html_escape($notice_content['project_title']); ?></a>
                     <?php endif; ?>
-                    <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $notice_content]); ?>  
+                    <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
                 </div>
             </div>
             <?php endforeach; ?>
@@ -65,7 +65,7 @@ jQuery(document).ready(function () {
                 <?php if (isset($remove_content['project_url'])): ?>
                     <a class="name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
                 <?php endif; ?>
-                <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $remove_content]); ?>  
+                <?php echo $this->partial('localcontexts/project.phtml', ['content' => $remove_content]); ?>  
             </div>
         </div>
         <?php endforeach; ?>

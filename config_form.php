@@ -21,7 +21,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     if (isset($project['project_url'])) {
         $lcHtml .= "<a class='project-name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
     }
-    $lcHtml .= $view->partial('localcontexts/projects.phtml', ['content' => $project]);
+    $lcHtml .= $view->partial('localcontexts/project.phtml', ['content' => $project]);
     $lcHtml .= '</div>';
     $lcSiteOptions[json_encode($project)] = $lcHtml;
 }

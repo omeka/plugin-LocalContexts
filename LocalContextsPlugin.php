@@ -189,7 +189,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             if (isset($project['project_url'])) {
                 $lcHtml .= "<a class='project-name' target='_blank' href=" . $project['project_url'] . ">" . $project['project_title'] . "</a>";
             }
-            $lcHtml .= $view->partial('localcontexts/projects.phtml', ['content' => $project]);
+            $lcHtml .= $view->partial('localcontexts/project.phtml', ['content' => $project]);
             $lcHtml .= '</div>';
             $lcBatchContent[json_encode($project)] = $lcHtml;
         }
@@ -337,21 +337,8 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function lcContentHtml($content)
     {
-        if ($content['image_url']) {
-            $html = sprintf(
-                "<div class='label'><img class='column image' src='%s'><div class='column text'>
-                <div class='name'>%s</div><div class='description'>%s</div></div></div>",
-                __($content['image_url']),
-                __($content['name']),
-                __($content['text']),
-            );
-        } else {
-            $html = sprintf(
-                "<div class='column text'><div class='name'>%s</div><div class='description'>%s</div></div>",
-                __($content['name']),
-                __($content['text']),
-            );
-        }
+        $view = get_view();
+        $html = $view->partial('localcontexts/notice.phtml', ['label' => $content]);
         return $html;
     }
 }

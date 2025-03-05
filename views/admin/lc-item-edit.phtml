@@ -14,7 +14,7 @@
                 <?php if (isset($notice_content['project_url'])): ?>
                     <a class='name' target='_blank' href=" . $notice_content['project_url'] . "><?php echo $notice_content['project_title']; ?></a>
                 <?php endif; ?>
-                <?php echo $this->partial('localcontexts/projects.phtml', ['content' => $notice_content]); ?>  
+                <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
                 </div>
             </div>
         <?php endforeach; ?>

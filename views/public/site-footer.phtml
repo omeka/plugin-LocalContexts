@@ -16,6 +16,7 @@
 
 <script>
 jQuery(document).ready(function() {
-    jQuery('#local-contexts').prependTo('footer').removeClass('default');
+    var footer = (jQuery('footer').length > 0) ? jQuery('footer') : jQuery('#footer');
+    jQuery('#local-contexts').prependTo(footer).removeClass('default');
 });
 </script>

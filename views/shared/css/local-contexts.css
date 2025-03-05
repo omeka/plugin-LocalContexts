@@ -10,6 +10,10 @@
     padding: 1rem;
 }
 
+.element-text .local-contexts-notice {
+    padding: 0;
+}
+
 .local-contexts-notice .notice-name {
     display: block;
     font-weight: bold;

@@ -1,0 +1,9 @@
+<div class="local-contexts-notice">
+    <?php if ($label['image_url'] !== ''): ?>
+    <img class='image' src='<?php echo $label['image_url']; ?>' alt=''>
+    <?php endif; ?>
+    <div class='local-context-notice-meta'>
+        <div class='notice-name'><?php echo $label['name']; ?></div>
+        <div class='notice-description'><?php echo $label['text']; ?></div>
+    </div>
+</div>
