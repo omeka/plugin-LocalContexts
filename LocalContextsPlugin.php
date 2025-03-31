@@ -316,7 +316,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 
                 // Don't print project URL if element value array is empty
                 if (isset($project['project_url']) && $lcElementValueArray) {
-                    $projectLink = '<a href=' . $project['project_url'] . '>' . $project['project_title'] . '</a>';
+                    $projectLink = '<a target="_blank" href=' . $project['project_url'] . '>' . $project['project_title'] . '</a>';
                     $lcElementValueArray[] = ['text' => $projectLink, 'html' => true];
                 }
             }
