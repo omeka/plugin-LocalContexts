@@ -165,6 +165,17 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             }
 
             $collaborateMetadata = json_decode($response->getBody(), true);
+            // Set institution/researcher name and profile page to display as linked 'project' metadata
+            if (isset($collaborateMetadata['institution'])) {
+                $newProjectArray['project_url'] = $collaborateMetadata['institution']['profile_url'];
+                $newProjectArray['project_title'] = $collaborateMetadata['institution']['name'] . ' (institution)';
+            } else if (isset($collaborateMetadata['researcher'])) {
+                $newProjectArray['project_url'] = $collaborateMetadata['researcher']['profile_url'];
+                $newProjectArray['project_title'] = $collaborateMetadata['researcher']['name'] . ' (researcher)';
+            } else {
+                $newProjectArray['project_url'] = null;
+                $newProjectArray['project_title'] = null;
+            }
             $noticeArray['name'] = isset($collaborateMetadata['notice']['name']) ? $collaborateMetadata['notice']['name'] : null;
             $noticeArray['image_url'] = isset($collaborateMetadata['notice']['img_url']) ? $collaborateMetadata['notice']['img_url'] : null;
             $noticeArray['text'] = isset($collaborateMetadata['notice']['default_text']) ? $collaborateMetadata['notice']['default_text'] : null;
