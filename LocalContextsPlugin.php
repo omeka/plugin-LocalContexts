@@ -346,7 +346,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $lcHtml = '';
 
         $projectTitle = isset($project['project_title']) ? $project['project_title'] : "Project";
-        $projectUrl = isset($project['project_url']) ? $project['project_url'] : '';
+        $projectUrl = isset($project['project_url']) ? rtrim($project['project_url'], "/") . '/' : '';
 
         if ($collapse) {
             $lcHtml .= '<div class="lc-collapsible-title"><a class="project-name" aria-label="expand" target="_blank" href=' . $projectUrl . '>';
