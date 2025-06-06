@@ -1,3 +1,8 @@
+<script type="text/javascript" charset="utf-8">
+jQuery(document).ready(function () {
+    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
+});
+</script>
 <fieldset id="item-local-contexts-fields">
 <h2><?php echo __('Local Contexts'); ?></h2>
 <p class='explanation'><?php echo __('Assign selected Local Contexts value(s) to selected metadata element in selected language(s)'); ?>
@@ -16,7 +21,14 @@
 <div class="field">
     <label class="two columns alpha"><?php echo __('Local Contexts value(s)'); ?></label>
     <div class="inputs five columns omega local-contexts-multicheckbox">
-        <?php echo $this->formMultiCheckbox('custom[lc_content][]', null, ['class' => 'column check', 'escape' => false], $lcBatchContent, ''); ?>
+    <?php foreach ($this->lcBatchContent as $project): ?>
+        <div class='local-contexts-multicheckbox-row'>
+            <input type='checkbox' name='custom[lc_content][]' value='<?php echo  __(json_encode($project['value'])); ?>' aria-labelledby="local-context-notice-label">
+            <div class='column content'>
+            <?php echo $project['label']; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
     </div>
 </div>
 </fieldset>

@@ -2,6 +2,7 @@
 /**
  * LocalContexts Controller
  */
+
 class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractActionController
 {
     protected $_autoCsrfProtection = true;
@@ -50,7 +51,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         }
 
         // Get existing LC content from database
-        $assignedArray = get_option('lc_notices') ? unserialize(get_option('lc_notices')) : [];
+        $existingProjectArray = get_option('lc_notices') ? unserialize(get_option('lc_notices')) : [];
 
         // If LC assign content selected, add to general settings
         if (isset($_POST['lc-notice'])) {
@@ -59,26 +60,26 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             }
             
             // Add notices to general options for site/item/exhibit access
-            if (isset($assignedArray)) {
-                $assignedArray = array_unique(array_merge($assignedArray, $noticeArray), SORT_REGULAR);
+            if (isset($existingProjectArray)) {
+                $existingProjectArray = array_unique(array_merge($existingProjectArray, $noticeArray), SORT_REGULAR);
             }
-            set_option('lc_notices', serialize($assignedArray));
+            set_option('lc_notices', serialize($existingProjectArray));
         }
 
         // Retrieve project data from Local Contexts API
-        $contentArray = [];
+        $newProjectArray = [];
         // Only retrieve API content if given API key
         if (!empty($_POST['lc_api_key'])) {
             if ( get_option('lc_project_id') ) {
                 $projects = explode(',', get_option('lc_project_id'));
                 // Display 'Open to Collaborate' notice along with all given projects
-                $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
+                $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
                 foreach ($projects as $projectID) {
-                    $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key'], trim($projectID));
+                    $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key'], trim($projectID));
                 }
             } else {
                 // Display 'Open to Collaborate' notice along with user's projects
-                $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
+                $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
                 $projectsURL = 'https://sandbox.localcontextshub.org/api/v2/projects/';
                 $this->client->setUri($projectsURL);
                 $this->client->setHeaders(['x-api-key' => $_POST['lc_api_key']]);
@@ -87,18 +88,38 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
                 if ($response->isSuccessful()) {
                     $projectsMetadata = json_decode($response->getBody(), true);
                     foreach ($projectsMetadata['results'] as $project) {
-                        $contentArray[] = $this->fetchAPIdata($_POST['lc_api_key'], $project['unique_id']);
+                        $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key'], $project['unique_id']);
                     }
                 }
 
             }
-            $contentArray = array_filter($contentArray);
+            $newProjectArray = array_filter($newProjectArray);
             // Pass API key to assign form to retain assign content after submission
             $this->view->lc_api_key = $_POST['lc_api_key'];
         }
 
         // Remove LC content that is already assigned
-        $contentArray = array_udiff($contentArray, $assignedArray, function($a, $b) { return $a <=> $b; });
+        $newProjectArray = array_udiff($newProjectArray, $existingProjectArray, function($a, $b) { return $a <=> $b; });
+
+        $contentArray = [];
+        foreach ($newProjectArray as $project) {
+            // Collapse many projects for ease of viewing
+            $collapse = (count($newProjectArray) >= 3) ? true : false;
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $collapse);
+            $lcArray['label'] = $lcHtml;
+            $lcArray['value'] = json_encode($project);
+            $contentArray[] = $lcArray;
+        }
+
+        $assignedArray = [];
+        foreach ($existingProjectArray as $project) {
+            // Collapse many projects for ease of viewing
+            $collapse = (count($existingProjectArray) >= 3) ? true : false;
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $collapse);
+            $lcArray['label'] = $lcHtml;
+            $lcArray['value'] = json_encode($project);
+            $assignedArray[] = $lcArray;
+        }
 
         // Redirect to index page if no content to display
         if (empty($contentArray) && empty($assignedArray)) {
@@ -147,8 +168,8 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             $noticeArray['name'] = isset($collaborateMetadata['notice']['name']) ? $collaborateMetadata['notice']['name'] : null;
             $noticeArray['image_url'] = isset($collaborateMetadata['notice']['img_url']) ? $collaborateMetadata['notice']['img_url'] : null;
             $noticeArray['text'] = isset($collaborateMetadata['notice']['default_text']) ? $collaborateMetadata['notice']['default_text'] : null;
-            $assignArray[] = $noticeArray;
-            return $assignArray;
+            $newProjectArray[] = $noticeArray;
+            return $newProjectArray;
         }
 
         $this->client->setUri($APIProjectURL);
@@ -162,7 +183,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         $projectMetadata = json_decode($response->getBody(), true);
 
         $assignArray['project_url'] = isset($projectMetadata['project_page']) ? $projectMetadata['project_page'] : null;
-        $assignArray['project_title'] = isset($projectMetadata['title']) ? $projectMetadata['title'] : null;
+        $assignArray['project_title'] = isset($projectMetadata['title']) ? $projectMetadata['title'] . ' (project)' : null;
         if (isset($projectMetadata['notice'])) {
             foreach ($projectMetadata['notice'] as $notice) {
                 $noticeArray['name'] = $notice['name'];

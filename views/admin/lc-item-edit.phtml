@@ -1,3 +1,8 @@
+<script type="text/javascript" charset="utf-8">
+jQuery(document).ready(function () {
+    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
+});
+</script>
 <p class='explanation'><?php echo __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s)'); ?></p>
 <div class="field">
     <div class="field-meta two columns alpha">
@@ -20,14 +25,11 @@
         <label id="local-context-notice-label"><?php echo __('Local Context Notice'); ?></label>
     </div>
     <div class="inputs local-contexts-multicheckbox five columns omega">
-    <?php foreach ($this->lc_content as $notice_content): ?>
+    <?php foreach ($this->lc_content as $project): ?>
         <div class='local-contexts-multicheckbox-row'>
-            <input type='checkbox' name='lc_content[]' value='<?php echo  __(json_encode($notice_content)); ?>' aria-labelledby="local-context-notice-label">
+            <input type='checkbox' name='lc_content[]' value='<?php echo  __(json_encode($project['value'])); ?>' aria-labelledby="local-context-notice-label">
             <div class='column content'>
-            <?php if (isset($notice_content['project_url'])): ?>
-                <a class='name' target='_blank' href=" . $notice_content['project_url'] . "><?php echo $notice_content['project_title']; ?></a>
-            <?php endif; ?>
-            <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
+            <?php echo $project['label']; ?>
             </div>
         </div>
     <?php endforeach; ?>

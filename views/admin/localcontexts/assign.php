@@ -3,8 +3,6 @@
  * View for Local Contexts content assign.
  */
 
-queue_css_file('local-contexts');
-
 $head = array('bodyclass' => 'edit', 
               'title' => html_escape(__('Local Contexts | Assign Notices')));
 echo head($head);
@@ -26,6 +24,7 @@ echo head($head);
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
     Omeka.Tabs.initialize();
+    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
 });
 </script>
 <section class="seven columns alpha" id="lc-assign-form">
@@ -36,16 +35,13 @@ jQuery(document).ready(function () {
     <fieldset class="set">
         <div class="instructions"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
         <div class="local-contexts-multicheckbox">
-            <?php foreach($lc_content as $notice_content): ?>
+            <?php foreach($lc_content as $assign_content): ?>
             <div class="local-contexts-multicheckbox-row">
                 <div class="column check">
-                    <input name="lc-notice[]" type="checkbox" value="<?php echo html_escape(json_encode($notice_content)); ?>">
+                    <input name="lc-notice[]" type="checkbox" value="<?php echo html_escape($assign_content['value']); ?>">
                 </div>
                 <div class="column content">
-                    <?php if (isset($notice_content['project_url'])): ?>
-                        <a class="project-name" target="_blank" href="<?php echo html_escape($notice_content['project_url']); ?>"><?php echo html_escape($notice_content['project_title']); ?></a>
-                    <?php endif; ?>
-                    <?php echo $this->partial('localcontexts/project.phtml', ['content' => $notice_content]); ?>  
+                    <?php echo $assign_content['label']; ?>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -62,13 +58,10 @@ jQuery(document).ready(function () {
             <?php foreach($lc_assigned as $remove_content): ?>
             <div class="local-contexts-multicheckbox-row">
                 <div class="column check">
-                    <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape(json_encode($remove_content)); ?>">
+                    <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape($remove_content['value']); ?>">
                 </div>
                 <div class="column content">
-                    <?php if (isset($remove_content['project_url'])): ?>
-                        <a class="project-name" target="_blank" href="<?php echo html_escape($remove_content['project_url']); ?>"><?php echo html_escape($remove_content['project_title']); ?></a>
-                    <?php endif; ?>
-                    <?php echo $this->partial('localcontexts/project.phtml', ['content' => $remove_content]); ?>  
+                    <?php echo $remove_content['label']; ?>
                 </div>
             </div>
             <?php endforeach; ?>
