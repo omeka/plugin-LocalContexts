@@ -40,7 +40,7 @@
     flex: 1;
 }
 
-.local-contexts-multicheckbox > label,
+/* .local-contexts-multicheckbox > label, */
 .local-contexts-multicheckbox .local-contexts-multicheckbox-row {
     display: flex;
     align-items: flex-start;

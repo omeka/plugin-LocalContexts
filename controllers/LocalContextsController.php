@@ -196,20 +196,39 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         $assignArray['project_url'] = isset($projectMetadata['project_page']) ? $projectMetadata['project_page'] : null;
         $assignArray['project_title'] = isset($projectMetadata['title']) ? $projectMetadata['title'] . ' (project)' : null;
         if (isset($projectMetadata['notice'])) {
-            foreach ($projectMetadata['notice'] as $notice) {
-                $noticeArray['name'] = $notice['name'];
-                $noticeArray['image_url'] = $notice['img_url'];
-                $noticeArray['text'] = $notice['default_text'];
-                $assignArray[] = $noticeArray;
-                if ($notice['translations']) {
-                    foreach ($notice['translations'] as $translation) {
-                        $noticeArray['name'] = $translation['translated_name'];
-                        $noticeArray['image_url'] = $notice['img_url'];
-                        $noticeArray['text'] = $translation['translated_text'];
-                        $noticeArray['language'] = $translation['language'];
-                        $assignArray[] = $noticeArray;
-                        $noticeArray = array();
-                    }
+            $assignArray = $this->buildLCProjectComponent($projectMetadata['notice'], $assignArray, true);
+        }
+        if (isset($projectMetadata['bc_labels'])) {
+            $assignArray = $this->buildLCProjectComponent($projectMetadata['bc_labels'], $assignArray, false);
+        }
+        if (isset($projectMetadata['tk_labels'])) {
+            $assignArray = $this->buildLCProjectComponent($projectMetadata['tk_labels'], $assignArray, false);
+        }
+
+        return $assignArray;
+    }
+
+    /**
+     * Retrieve metadata from Notices and Labels
+     *
+     * @param array $projectMetadataArray
+     * @param bool $isNotice
+     */
+    protected function buildLCProjectComponent($projectMetadataArray, $assignArray, $isNotice = false)
+    {
+        foreach ($projectMetadataArray as $component) {
+            $componentArray['name'] = $component['name'];
+            $componentArray['image_url'] = $component['img_url'];
+            $componentArray['text'] = $isNotice ? $component['default_text'] : $component['label_text'];
+            $assignArray[] = $componentArray;
+            if ($component['translations']) {
+                foreach ($component['translations'] as $translation) {
+                    $componentArray['name'] = $translation['translated_name'];
+                    $componentArray['image_url'] = $component['img_url'];
+                    $componentArray['text'] = $translation['translated_text'];
+                    $componentArray['language'] = $translation['language'];
+                    $assignArray[] = $componentArray;
+                    $componentArray = array();
                 }
             }
         }
