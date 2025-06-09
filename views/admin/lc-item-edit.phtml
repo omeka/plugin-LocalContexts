@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
     Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
 });
 </script>
-<p class='explanation'><?php echo __('Assign selected Local Contexts notice(s) to selected metadata element in selected language(s)'); ?></p>
+<p class='explanation'><?php echo __('Assign selected Local Contexts value(s) to selected metadata element in selected language(s)'); ?></p>
 <div class="field">
     <div class="field-meta two columns alpha">
         <label for="lc_content_element"><?php echo __('Element'); ?></label>
@@ -22,7 +22,7 @@ jQuery(document).ready(function () {
 </div>
 <div class="field">
     <div class="field-meta">
-        <label id="local-context-notice-label"><?php echo __('Local Context Notice'); ?></label>
+        <label id="local-context-notice-label"><?php echo __('Local Context value(s)'); ?></label>
     </div>
     <div class="inputs local-contexts-multicheckbox five columns omega">
     <?php foreach ($this->lc_content as $project): ?>

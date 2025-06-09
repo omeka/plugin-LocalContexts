@@ -18,7 +18,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
      
         $form->addElementToEditGroup('password', 'lc_api_key', array(
             'label'       => __('API Key'),
-            'description' => __('Optional. To retrieve project notices from Local Contexts Hub, enter user API key. To edit/remove existing notices, leave blank.'),
+            'description' => __('Optional. To retrieve project content from Local Contexts Hub, enter user API key. To edit/remove existing content, leave blank.'),
             'class'       => 'textinput',
             'size'        => '40',
         ));

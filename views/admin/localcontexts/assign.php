@@ -4,7 +4,7 @@
  */
 
 $head = array('bodyclass' => 'edit', 
-              'title' => html_escape(__('Local Contexts | Assign Notices')));
+              'title' => html_escape(__('Local Contexts | Assign Notices & Labels')));
 echo head($head);
 ?>
 
