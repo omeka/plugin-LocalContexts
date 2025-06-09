@@ -172,6 +172,9 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             } else if (isset($collaborateMetadata['researcher'])) {
                 $newProjectArray['project_url'] = $collaborateMetadata['researcher']['profile_url'];
                 $newProjectArray['project_title'] = $collaborateMetadata['researcher']['name'] . ' (researcher)';
+            } else if (isset($collaborateMetadata['integration_partner'])) {
+                $newProjectArray['project_url'] = $collaborateMetadata['integration_partner']['profile_url'];
+                $newProjectArray['project_title'] = $collaborateMetadata['integration_partner']['name'] . ' (integration partner)';
             } else {
                 $newProjectArray['project_url'] = null;
                 $newProjectArray['project_title'] = null;
