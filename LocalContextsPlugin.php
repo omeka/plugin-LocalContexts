@@ -75,7 +75,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $indexRoute = new Zend_Controller_Router_Route('local-contexts',
             array(
                 'module'        => 'local-contexts',
-                'controller'    => 'localcontexts',
+                'controller'    => 'local-contexts',
                 'action'        => 'index'
                 )
             );
@@ -84,7 +84,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $assignRoute = new Zend_Controller_Router_Route('local-contexts/assign',
             array(
                 'module'        => 'local-contexts',
-                'controller'    => 'localcontexts',
+                'controller'    => 'local-contexts',
                 'action'        => 'assign'
                 )
             );
