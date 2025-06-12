@@ -80,18 +80,22 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             } else {
                 // Display 'Open to Collaborate' notice along with user's projects
                 $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
-                $projectsURL = 'https://sandbox.localcontextshub.org/api/v2/projects/';
-                $this->client->setUri($projectsURL);
-                $this->client->setHeaders(['x-api-key' => $_POST['lc_api_key']]);
-                $response = $this->client->request('GET');
-
-                if ($response->isSuccessful()) {
-                    $projectsMetadata = json_decode($response->getBody(), true);
-                    foreach ($projectsMetadata['results'] as $project) {
-                        $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key'], $project['unique_id']);
+                $iterate = function ($projectsURL) use (&$iterate, &$newProjectArray) {
+                    $this->client->setUri($projectsURL);
+                    $this->client->setHeaders(['x-api-key' => $_POST['lc_api_key']]);
+                    $response = $this->client->request('GET');
+                    if ($response->isSuccessful()) {
+                        $projectsMetadata = json_decode($response->getBody(), true);
+                        foreach ($projectsMetadata['results'] as $project) {
+                            $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key'], $project['unique_id']);
+                        }
+                        if (!is_null($projectsMetadata['next'])) {
+                            $iterate($projectsMetadata['next']);
+                        }
                     }
-                }
-
+                    return $newProjectArray;
+                };
+                $iterate('https://sandbox.localcontextshub.org/api/v2/projects/');
             }
             $newProjectArray = array_filter($newProjectArray);
             // Pass API key to assign form to retain assign content after submission
