@@ -72,6 +72,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         if (!empty($_POST['lc_api_key'])) {
             if ( get_option('lc_project_id') ) {
                 $projects = explode(',', get_option('lc_project_id'));
+                $projects = array_unique($projects);
                 // Display 'Open to Collaborate' notice along with all given projects
                 $newProjectArray[] = $this->fetchAPIdata($_POST['lc_api_key']);
                 foreach ($projects as $projectID) {
