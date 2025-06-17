@@ -73,7 +73,9 @@ jQuery(document).ready(function () {
 <section class="three columns omega">
     <div id="save" class="panel">
         <input type="submit" name="submit" id="submit" value="Submit" class="big green button">
+        <?php if (isset($lc_api_key)): ?>
         <input type="hidden" name="lc_api_key" value="<?php echo html_escape($lc_api_key); ?>"/>
+        <?php endif; ?>
     </div>
 </section>
 </form>
