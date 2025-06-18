@@ -169,8 +169,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $view = get_view();
         $lcSiteChecked = get_option('lc_content_site') ? unserialize(get_option('lc_content_site')) : [];
-        $elementTable = get_db()->getTable('Element');
-        $elementData = $elementTable->findPairsForSelectForm();
+        $elementData = get_db()->getTable('Element')->findPairsForSelectForm(array('exclude_item_type' => true));
         $lcLanguageOptions = [
             'All' => __('All available languages'),
             'English' => __('English'),
@@ -239,8 +238,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                 $contentArray[] = $lcArray;
             }
 
-            $elementTable = get_db()->getTable('Element');
-            $elementData = $elementTable->findPairsForSelectForm();
+            $elementData = get_db()->getTable('Element')->findPairsForSelectForm(array('exclude_item_type' => true));
 
             $languageData = [
                 'All' => __('All available languages'),
