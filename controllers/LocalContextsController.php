@@ -11,8 +11,6 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
     {
         $form = new Omeka_Form_Admin(array('type'=>'lc_api_settings'));
 
-        $projectID = get_option('lc_project_id');
-
         $form->setAction(url('local-contexts/assign'))
              ->setMethod('post');
      
@@ -25,7 +23,6 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
 
         $form->addElementToEditGroup('text', 'lc_project_id', array(
             'label'       => __('Local Contexts Project ID'),
-            'value'       => $projectID,
             'description' => __('Optional. Input Project IDs to retrieve from Local Contexts Hub. Add multiple IDs separated by "," to return multiple projects.'),
             'class'       => 'textinput',
             'size'        => '40',
