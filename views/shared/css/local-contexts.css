@@ -88,6 +88,10 @@ span.lc {
     font-weight: bold;
 }
 
+.local-contexts-project select {
+    width: 30%;
+}
+
 @media screen and (min-width: 1200px) {
     footer .local-contexts-project {
         display: flex;

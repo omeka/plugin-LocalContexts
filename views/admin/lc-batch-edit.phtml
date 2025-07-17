@@ -23,7 +23,7 @@ jQuery(document).ready(function () {
     <div class="inputs five columns omega local-contexts-multicheckbox">
     <?php foreach ($this->lcBatchContent as $project): ?>
         <div class='local-contexts-multicheckbox-row'>
-            <input type='checkbox' name='custom[lc_content][]' value='<?php echo  __(json_encode($project['value'])); ?>' aria-labelledby="local-context-notice-label">
+            <input type='checkbox' class="column check" name='custom[lc_content][]' aria-labelledby="lc-notice-title-<?php echo $project['project_key']; ?>" value='<?php echo  __(json_encode($project['value'])); ?>'>
             <div class='column content'>
             <?php echo $project['label']; ?>
             </div>

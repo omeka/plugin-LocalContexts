@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
             <?php foreach($lc_content as $assign_content): ?>
             <div class="local-contexts-multicheckbox-row">
                 <div class="column check">
-                    <input name="lc-notice[]" type="checkbox" value="<?php echo html_escape($assign_content['value']); ?>">
+                    <input name="lc-notice[]" type="checkbox" aria-labelledby="lc-notice-title-<?php echo html_escape($assign_content['project_key']); ?>" value="<?php echo html_escape($assign_content['value']); ?>">
                 </div>
                 <div class="column content">
                     <?php echo $assign_content['label']; ?>
@@ -58,7 +58,7 @@ jQuery(document).ready(function () {
             <?php foreach($lc_assigned as $remove_content): ?>
             <div class="local-contexts-multicheckbox-row">
                 <div class="column check">
-                    <input name="lc-remove[]" type="checkbox" value="<?php echo html_escape($remove_content['value']); ?>">
+                    <input name="lc-remove[]" type="checkbox" aria-labelledby="lc-notice-title-<?php echo html_escape($remove_content['project_key']); ?>" value="<?php echo html_escape($remove_content['value']); ?>">
                 </div>
                 <div class="column content">
                     <?php echo $remove_content['label']; ?>

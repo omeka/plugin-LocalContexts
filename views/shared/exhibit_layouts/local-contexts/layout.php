@@ -24,7 +24,7 @@ if (isset($project['project_url']) && $projectArray) {
 
 $lcArray = array();
 if ($projectArray) {
-    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($projectArray);
+    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($projectArray, null);
     $lcArray['label'] = $lcHtml;
 }
 ?>

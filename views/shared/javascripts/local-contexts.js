@@ -13,12 +13,12 @@ Omeka.LocalContexts = {};
             $(this).hide();
         });
         $('.lc-collapsible-title').each(function () {
-            $(this).append('<div class="drawer-toggle"></div>');
+            $(this).after('<div class="drawer-toggle"></div>');
         });
         $('.drawer-toggle')
             .click(function (event) {
                 event.preventDefault();
-                $(event.target).parent().next().toggle();
+                $(this).siblings('.lc-collapsible-content').toggle();
                 $(this).toggleClass('opened');
             })
             .mousedown(function (event) {

@@ -127,7 +127,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             $lcLanguage = get_option('lc_site_language');
             
             $contentArray = array();
-            foreach ($projects as $project) {
+            foreach ($projects as $key => $project) {
                 $project = json_decode($project, true);
                 $projectArray = array();
 
@@ -149,7 +149,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                 }
 
                 if ($projectArray) {
-                    $lcHtml = self::renderLCNoticeHtml($projectArray);
+                    $lcHtml = self::renderLCNoticeHtml($projectArray, $key);
                     $lcArray['label'] = $lcHtml;
                     $lcArray['value'] = json_encode($project);
                     $contentArray[] = $lcArray;
@@ -189,9 +189,10 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
             // Collapse many projects for ease of viewing
             $collapse = (count($projects) >= 3) ? true : false;
             // Save each project's content as single select value
-            $lcHtml = self::renderLCNoticeHtml($project, $collapse);
+            $lcHtml = self::renderLCNoticeHtml($project, $key, $collapse);
             $lcArray['label'] = $lcHtml;
             $lcArray['value'] = $project;
+            $lcArray['project_key'] = $key;
             $lcBatchContent[] = $lcArray;
         }
 
@@ -229,12 +230,13 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $view = get_view();
         if (get_option('lc_notices')) {
 			$projects = unserialize(get_option('lc_notices'));
-            foreach ($projects as $project) {
+            foreach ($projects as $key => $project) {
                 // Collapse many projects for ease of viewing
                 $collapse = (count($projects) >= 3) ? true : false;
-                $lcHtml = self::renderLCNoticeHtml($project, $collapse);
+                $lcHtml = self::renderLCNoticeHtml($project, $key, $collapse);
                 $lcArray['label'] = $lcHtml;
                 $lcArray['value'] = $project;
+                $lcArray['project_key'] = $key;
                 $contentArray[] = $lcArray;
             }
 
@@ -319,7 +321,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                                 $lcElementArray['project_title'] = $project['project_title'];
                                 $lcElementArray['project_url'] = $project['project_url'];
                             }
-                            $lcElementValue = self::renderLCNoticeHtml($lcElementArray);
+                            $lcElementValue = self::renderLCNoticeHtml($lcElementArray, $key);
                             $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
                         }
                     }
@@ -340,17 +342,16 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         }
     }
 
-    public static function renderLCNoticeHtml($project, $collapse = false) {
+    public static function renderLCNoticeHtml($project, $projectKey, $collapse = false) {
         $lcHtml = '';
 
         $projectTitle = isset($project['project_title']) ? $project['project_title'] : "Project";
         $projectUrl = isset($project['project_url']) ? rtrim($project['project_url'], "/") . '/' : '';
 
         if ($collapse) {
-            $lcHtml .= '<div class="lc-collapsible-title"><a class="project-name" aria-label="expand" target="_blank" href=' . $projectUrl . '>';
-            $lcHtml .= $projectTitle . '</a></div><div class="lc-collapsible-content">';
-        } else {
-            $lcHtml .= '<a class="project-name" target="_blank" href=' . $projectUrl . '>' . $projectTitle . '</a>';
+            $lcHtml .= '<div class="lc-collapsible-title" id="lc-notice-title-' . $projectKey . '">' . $projectTitle . '</div>';
+            $lcHtml .= '<a href="#" class="expand" aria-expanded="false" aria-controls="lc-notices-content-' . $projectKey . '" aria-label="expand"></a>';
+            $lcHtml .= '<div class="lc-collapsible-content" id="lc-notices-content-' . $projectKey . '">';
         }
 
         $image_urls = array_unique(array_column($project, 'image_url'));
@@ -378,7 +379,10 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         }
 
         if ($collapse) {
+            $lcHtml .= '<a class="project-link" target="_blank" href=' . $projectUrl . '>' . $projectTitle . '</a>';
             $lcHtml .= '</div>';
+        } else {
+            $lcHtml .= '<a class="project-name project-link" target="_blank" href=' . $projectUrl . '>' . $projectTitle . '</a>';
         }
 
         return $lcHtml;

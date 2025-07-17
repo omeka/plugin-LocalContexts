@@ -19,15 +19,10 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     // Collapse many projects for ease of viewing
     $collapse = (count($projects) >= 3) ? true : false;
     // Save each project's content as single select value
-    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $collapse);
+    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $key, $collapse);
     $lcSiteOptions[json_encode($project)] = $lcHtml;
 }
 ?>
-<script type="text/javascript" charset="utf-8">
-jQuery(document).ready(function () {
-    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
-});
-</script>
 
 <div class="field">
     <div class="two columns alpha">
@@ -56,3 +51,13 @@ jQuery(document).ready(function () {
     </div>
 </div>
 <?php endif; ?>
+
+<script type="text/javascript" charset="utf-8">
+jQuery(document).ready(function () {
+    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
+    $('.lc-collapsible-title').each(function () {
+        titleID = $(this).attr('id');
+        $(this).siblings('input').attr('aria-labelledby', titleID);
+    });
+});
+</script>
