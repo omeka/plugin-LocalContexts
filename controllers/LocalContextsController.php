@@ -18,6 +18,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             'label'       => __('API Key'),
             'description' => __('Optional. To retrieve project content from Local Contexts Hub, enter user API key. To edit/remove existing content, leave blank.'),
             'class'       => 'textinput',
+            'autocomplete' => 'off',
             'size'        => '40',
         ));
 
@@ -25,6 +26,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             'label'       => __('Local Contexts Project ID'),
             'description' => __('Optional. Input Project IDs to retrieve from Local Contexts Hub. Add multiple IDs separated by "," to return multiple projects.'),
             'class'       => 'textinput',
+            'autocomplete' => 'off',
             'size'        => '40',
         ));
 
