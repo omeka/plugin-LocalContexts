@@ -25,13 +25,10 @@ jQuery(document).ready(function () {
         <label id="local-context-notice-label"><?php echo __('Local Context value(s)'); ?></label>
     </div>
     <div class="inputs local-contexts-multicheckbox five columns omega">
-    <?php foreach ($this->lc_content as $project): ?>
-        <div class='local-contexts-multicheckbox-row'>
-            <input type='checkbox' class="column check" name='lc_content[]' aria-labelledby="lc-notice-title-<?php echo $project['project_key']; ?>" value='<?php echo  __(json_encode($project['value'])); ?>'>
-            <div class='column content'>
-            <?php echo $project['label']; ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
+    <?php
+    foreach ($lc_content as $project) {
+        echo $project;
+    }
+    ?>
     </div>
 </div>

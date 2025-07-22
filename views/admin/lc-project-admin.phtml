@@ -1,0 +1,9 @@
+<div class="local-contexts-multicheckbox-row">
+    <input type="checkbox" name="lc-content[]" value="<?php echo html_escape(json_encode($project)); ?>">
+	<?php 
+		foreach ($projectByImage as $imageUrl => $notices) {
+			echo $this->partial('lc-notice.phtml', ['imageUrl' => $imageUrl, 'notices' => $notices]);
+		}
+	?>
+<a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?></a>
+</div>

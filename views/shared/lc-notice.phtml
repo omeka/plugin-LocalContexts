@@ -1,0 +1,17 @@
+<div class="local-contexts-notice">
+    <img class="image" src="<?php echo $imageUrl; ?>" alt="">
+    <div class="local-context-notice-meta">
+    <?php foreach ($notices as $notice): ?>
+        <?php $language = isset($notice['language']) ? $notice['language'] : 'English'; ?>
+        <div class="text">
+            <div class="notice-name">
+                <?php echo $notice['name']; ?>
+                <span class="language"> (<?php echo $language; ?>)</span>
+            </div>
+            <div class="notice-description">
+                <?php echo $notice['text']; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+</div>

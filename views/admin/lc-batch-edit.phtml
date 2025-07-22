@@ -21,14 +21,11 @@ jQuery(document).ready(function () {
 <div class="field">
     <label class="two columns alpha"><?php echo __('Local Contexts value(s)'); ?></label>
     <div class="inputs five columns omega local-contexts-multicheckbox">
-    <?php foreach ($this->lcBatchContent as $project): ?>
-        <div class='local-contexts-multicheckbox-row'>
-            <input type='checkbox' class="column check" name='custom[lc_content][]' aria-labelledby="lc-notice-title-<?php echo $project['project_key']; ?>" value='<?php echo  __(json_encode($project['value'])); ?>'>
-            <div class='column content'>
-            <?php echo $project['label']; ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
+    <?php
+    foreach ($lc_content as $project) {
+        echo $project;
+    }
+    ?>
     </div>
 </div>
 </fieldset>

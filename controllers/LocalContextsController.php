@@ -108,11 +108,9 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             $projectKey = $key;
             // Collapse many projects for ease of viewing
             $collapse = (count($newProjectArray) >= 3) ? true : false;
-            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, $collapse);
-            $lcArray['label'] = $lcHtml;
-            $lcArray['value'] = json_encode($project);
-            $lcArray['project_key'] = $projectKey;
-            $contentArray[] = $lcArray;
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, $collapse);
+            $lcHtml = str_replace("lc-content[]", "lc-notice[]", $lcHtml);
+            $contentArray[] = $lcHtml;
         }
 
         $assignedArray = [];
@@ -121,11 +119,9 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             $projectKey = '9999' . $key;
             // Collapse many projects for ease of viewing
             $collapse = (count($existingProjectArray) >= 3) ? true : false;
-            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, $collapse);
-            $lcArray['label'] = $lcHtml;
-            $lcArray['value'] = json_encode($project);
-            $lcArray['project_key'] = $projectKey;
-            $assignedArray[] = $lcArray;
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, $collapse);
+            $lcHtml = str_replace("lc-content[]", "lc-remove[]", $lcHtml);
+            $assignedArray[] = $lcHtml;
         }
 
         // Redirect to index page if no content to display

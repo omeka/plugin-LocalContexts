@@ -35,16 +35,11 @@ jQuery(document).ready(function () {
     <fieldset class="set">
         <div class="instructions"><?php echo __('Select content to make available for assignment to Site, Items & Exhibits:'); ?></div>
         <div class="local-contexts-multicheckbox">
-            <?php foreach($lc_content as $assign_content): ?>
-            <div class="local-contexts-multicheckbox-row">
-                <div class="column check">
-                    <input name="lc-notice[]" type="checkbox" aria-labelledby="lc-notice-title-<?php echo html_escape($assign_content['project_key']); ?>" value="<?php echo html_escape($assign_content['value']); ?>">
-                </div>
-                <div class="column content">
-                    <?php echo $assign_content['label']; ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
+            <?php
+            foreach ($lc_content as $assign_content) {
+                echo $assign_content;
+            }
+            ?>
         </div>
     </fieldset>
     </div>
@@ -55,16 +50,11 @@ jQuery(document).ready(function () {
     <fieldset class="set">
         <div class="instructions"><?php echo __('Select existing content to remove from assignment list (content already assigned to Sites, Items & Exhibits must be manually removed):'); ?></div>
         <div class="local-contexts-multicheckbox">
-            <?php foreach($lc_assigned as $remove_content): ?>
-            <div class="local-contexts-multicheckbox-row">
-                <div class="column check">
-                    <input name="lc-remove[]" type="checkbox" aria-labelledby="lc-notice-title-<?php echo html_escape($remove_content['project_key']); ?>" value="<?php echo html_escape($remove_content['value']); ?>">
-                </div>
-                <div class="column content">
-                    <?php echo $remove_content['label']; ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
+            <?php
+            foreach ($lc_assigned as $remove_content) {
+                echo $remove_content;
+            }
+            ?>
         </div>
     </fieldset>
     </div>

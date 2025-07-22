@@ -27,22 +27,8 @@
     font-weight: normal !important;
 }
 
-.inputs .local-contexts-multicheckbox {
+.local-contexts-multicheckbox {
     flex-wrap: wrap;
-    align-items: flex-start;
-}
-
-.inputs .local-contexts-multicheckbox .column.check {
-    margin: 1rem;
-}
-
-.local-contexts-multicheckbox .column.content {
-    flex: 1;
-}
-
-/* .local-contexts-multicheckbox > label, */
-.local-contexts-multicheckbox .local-contexts-multicheckbox-row {
-    display: flex;
     align-items: flex-start;
 }
 
@@ -64,7 +50,6 @@
 
 .project-link {
     display: block;
-    width: 100%;
     font-size: 16px;
     text-align: right !important;
     padding: 1rem;
@@ -72,6 +57,10 @@
 
 .drawer-toggle {
     display: inline;
+}
+
+.drawer-contents {
+    overflow: revert;
 }
 
 .project-name {
