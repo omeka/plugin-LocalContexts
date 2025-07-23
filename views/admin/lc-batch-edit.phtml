@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
-    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
+    Omeka.manageDrawers('#lc-batch-edit-drawer-list', '.local-contexts-multicheckbox-row');
 });
 </script>
 <fieldset id="item-local-contexts-fields">
@@ -20,7 +20,7 @@ jQuery(document).ready(function () {
 </div>
 <div class="field">
     <label class="two columns alpha"><?php echo __('Local Contexts value(s)'); ?></label>
-    <div class="inputs five columns omega local-contexts-multicheckbox">
+    <div id="lc-batch-edit-drawer-list" class="inputs five columns omega local-contexts-multicheckbox">
     <?php
     foreach ($lc_content as $project) {
         echo $project;

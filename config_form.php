@@ -22,9 +22,8 @@ foreach($lcSiteChecked as $siteProject) {
 
 foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     // Collapse many projects for ease of viewing
-    $collapse = (count($projects) >= 3) ? true : false;
     // Save each project's content as single select value
-    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $key, false, $collapse);
+    $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $key, false, true);
     $contentArray[] = $lcHtml;
 }
 ?>
@@ -49,7 +48,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
     </div>
     <div class="inputs five columns omega">
         <p class='explanation'><?php echo __('Local Contexts value(s) to apply to public site footer.'); ?></p>
-        <div class="local-contexts-multicheckbox">
+        <div id="lc-config-drawer-list" class="local-contexts-multicheckbox">
             <?php
             foreach ($contentArray as $project) {
                 echo $project;
@@ -62,7 +61,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
-    Omeka.addReadyCallback(Omeka.LocalContexts.addHideButtons);
+    Omeka.manageDrawers('#lc-config-drawer-list', '.local-contexts-multicheckbox-row');
     lcCheckedProjects = <?php echo js_escape($lcCheckedProjects); ?>;
     $.each(lcCheckedProjects, function(key, projectID) {
         $("[value*='" + projectID + "']").attr('checked', 'true');

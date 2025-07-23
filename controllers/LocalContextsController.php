@@ -109,8 +109,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         foreach ($newProjectArray as $key => $project) {
             $projectKey = $key;
             // Collapse many projects for ease of viewing
-            $collapse = (count($newProjectArray) >= 3) ? true : false;
-            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, $collapse);
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, true);
             $lcHtml = str_replace("lc-content[]", "lc-notice[]", $lcHtml);
             $contentArray[] = $lcHtml;
         }
@@ -120,8 +119,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
             // Need to add string to start of existing project key to avoid concurrence with new project keys
             $projectKey = '9999' . $key;
             // Collapse many projects for ease of viewing
-            $collapse = (count($existingProjectArray) >= 3) ? true : false;
-            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, $collapse);
+            $lcHtml = LocalContextsPlugin::renderLCNoticeHtml($project, $projectKey, false, true);
             $lcHtml = str_replace("lc-content[]", "lc-remove[]", $lcHtml);
             $assignedArray[] = $lcHtml;
         }

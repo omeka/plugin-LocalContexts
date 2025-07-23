@@ -187,9 +187,8 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
         $projects = get_option('lc_notices') ? unserialize(get_option('lc_notices')) : [];
         foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
             // Collapse many projects for ease of viewing
-            $collapse = (count($projects) >= 3) ? true : false;
             // Save each project's content as single select value
-            $lcHtml = self::renderLCNoticeHtml($project, $key, false, $collapse);
+            $lcHtml = self::renderLCNoticeHtml($project, $key, false, true);
             $lcHtml = str_replace("lc-content[]", "custom[lc-content][]", $lcHtml);
             $lcBatchContent[] = $lcHtml;
         }
@@ -230,8 +229,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
 			$projects = unserialize(get_option('lc_notices'));
             foreach ($projects as $key => $project) {
                 // Collapse many projects for ease of viewing
-                $collapse = (count($projects) >= 3) ? true : false;
-                $lcHtml = self::renderLCNoticeHtml($project, $key, false, $collapse);
+                $lcHtml = self::renderLCNoticeHtml($project, $key, false, true);
                 $contentArray[] = $lcHtml;
             }
 
@@ -316,7 +314,7 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                                 $lcElementArray['project_title'] = $project['project_title'];
                                 $lcElementArray['project_url'] = $project['project_url'];
                             }
-                            $lcElementValue = self::renderLCNoticeHtml($lcElementArray, $projectKey = $key, true, null);
+                            $lcElementValue = self::renderLCNoticeHtml($lcElementArray, $projectKey = $key, true, true);
                             $lcElementValueArray[] = ['text' => $lcElementValue, 'html' => true];
                         }
                     }
@@ -363,15 +361,13 @@ class LocalContextsPlugin extends Omeka_Plugin_AbstractPlugin
                 'projectByImage' => $projectByImage,
             ]);
         } else if ($collapse) {
-            $collapseHtml = "<div id='drawer-list'>";
-            $collapseHtml .= $view->partial('lc-project-collapse.phtml', [
+            $collapseHtml = $view->partial('lc-project-collapse.phtml', [
                 'project' => $project,
                 'projectTitle' => $projectTitle,
                 'projectUrl' => $projectUrl,
                 'projectKey' => $projectKey,
                 'projectByImage' => $projectByImage,
             ]);
-            $collapseHtml .= "</div>";
             return $collapseHtml;
         } else {
             return $view->partial('lc-project-admin.phtml', [

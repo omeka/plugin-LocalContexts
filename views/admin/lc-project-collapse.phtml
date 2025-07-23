@@ -2,7 +2,7 @@
     <div class="drawer">
 		<input type="checkbox" name="lc-content[]" aria-labelledby="drawer-title-<?php echo $projectKey; ?>" value="<?php echo html_escape(json_encode($project)); ?>">
 		<span class="drawer-name" id="drawer-title-<?php echo $projectKey; ?>"><?php echo $projectTitle; ?></span>
-		<button type="button" class="drawer-toggle" aria-expanded="false" aria-controls="drawer-contents-<?php echo $projectKey; ?>" aria-label="Expand">
+		<button type="button" class="drawer-toggle" data-action-selector="opened" aria-expanded="false" aria-controls="drawer-contents-<?php echo $projectKey; ?>" aria-label="Expand">
 			<span class="icon" aria-hidden="true"></span>
 		</button>
 	</div>

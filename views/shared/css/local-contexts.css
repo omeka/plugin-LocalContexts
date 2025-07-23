@@ -6,16 +6,20 @@
 .local-contexts-notice {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
     padding: 1rem;
+}
+
+.drawer-contents .local-contexts-notice {
+    padding: 0;
+    margin-bottom: 1rem;
 }
 
 .element-text .local-contexts-notice {
     padding: 0;
 }
 
-.local-context-notice-meta .text {
-    padding: 5px 0px;
+.local-contexts-notice .text:not(:only-child) {
+    margin-bottom: 1rem;
 }
 
 .local-contexts-notice .notice-name {
@@ -28,18 +32,21 @@
 }
 
 .local-contexts-multicheckbox {
+    margin: 1rem 0;
     flex-wrap: wrap;
     align-items: flex-start;
 }
 
-.local-contexts-multicheckbox .local-contexts-multicheckbox-row:nth-of-type(odd),
-.local-contexts-multicheckbox > label:nth-of-type(odd) {
-    background: rgba(0,0,0,.04);
+.field .local-contexts-multicheckbox {
+    margin: 0;
+}
+
+.local-contexts-multicheckbox-row {
+    margin-bottom: 1rem;
 }
 
 .local-contexts-multicheckbox input[type="checkbox"] {
-    margin: 1rem !important;
-    align-self: flex-start;
+    margin-right: 1rem !important;
 }
 
 .local-contexts-notice .image {
@@ -50,9 +57,7 @@
 
 .project-link {
     display: block;
-    font-size: 16px;
     text-align: right !important;
-    padding: 1rem;
 }
 
 .drawer-toggle {
@@ -61,12 +66,6 @@
 
 .drawer-contents {
     overflow: revert;
-}
-
-.project-name {
-    padding: 1rem;
-    font-size: 16px;
-    display: block;
 }
 
 .project-link:not(:last-child) {
