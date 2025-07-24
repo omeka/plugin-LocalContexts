@@ -18,7 +18,7 @@ foreach ($projects as $project) {
 ?>
 <div class="local-contexts-project">
     <?php
-    echo $this->formLabel($formStem . '[options][lc-project-id]',
+    echo $this->formLabel($formStem . '[options][lc-project-language]',
         __('Select Local Contexts language'));
     echo $this->formSelect($formStem . '[options][lc-project-language]',
         @$options['lc-project-language'], array(),
