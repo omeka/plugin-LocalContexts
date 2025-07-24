@@ -7,13 +7,13 @@ jQuery(document).ready(function () {
 <h2><?php echo __('Local Contexts'); ?></h2>
 <p class='explanation'><?php echo __('Assign selected Local Contexts value(s) to selected metadata element in selected language(s)'); ?>
 <div class="field">
-    <label class="two columns alpha"><?php echo __('Metadata element'); ?></label>
+    <label for="custom-lc_content_element" class="two columns alpha"><?php echo __('Metadata element'); ?></label>
     <div class="inputs five columns omega">
         <?php echo $this->formSelect('custom[lc_content_element]', null, array(), $elementData); ?>
     </div>
 </div>
 <div class="field">
-    <label class="two columns alpha"><?php echo __('Local Contexts language(s)'); ?></label>
+    <label for="custom-lc_content_language" class="two columns alpha"><?php echo __('Local Contexts language(s)'); ?></label>
     <div class="inputs five columns omega">
         <?php echo $this->formSelect('custom[lc_content_language]', null, array(), $lcLanguageOptions); ?>
     </div>

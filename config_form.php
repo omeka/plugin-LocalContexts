@@ -30,7 +30,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 
 <div class="field">
     <div class="two columns alpha">
-        <label><?php echo __('Local Contexts language'); ?></label>    
+        <label for="lc_site_language"><?php echo __('Local Contexts language'); ?></label>    
     </div>
     <div class="inputs five columns omega" >
         <p class='explanation'><?php echo __('Only display content in selected language (Note: must already be generated and retrieved from LC Hub).'); ?>
