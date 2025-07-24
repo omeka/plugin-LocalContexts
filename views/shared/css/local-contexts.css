@@ -49,6 +49,10 @@
     margin-right: 1rem !important;
 }
 
+.local-contexts-multicheckbox-row .drawer-name {
+    max-width: calc(100% - 5em);
+}
+
 .local-contexts-notice .image {
     height: 75px;
     border: 0px !important;
