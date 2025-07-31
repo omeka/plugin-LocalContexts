@@ -95,7 +95,7 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
                     }
                     return $newProjectArray;
                 };
-                $iterate('https://sandbox.localcontextshub.org/api/v2/projects/');
+                $iterate('https://localcontextshub.org/api/v2/projects/');
             }
             $newProjectArray = array_filter($newProjectArray);
             // Pass API key to assign form to retain assign content after submission
@@ -154,10 +154,10 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         
         if (!empty($projectID)) {
             // If project ID(s) given, retrieve specific project notices
-            $APIProjectURL = 'https://sandbox.localcontextshub.org/api/v2/projects/' . $projectID . '/';
+            $APIProjectURL = 'https://localcontextshub.org/api/v2/projects/' . $projectID . '/';
         } else {
             // If not, retrieve generic 'Open to Collaborate' notice
-            $collaborateURL = 'https://sandbox.localcontextshub.org/api/v2/notices/open_to_collaborate/';
+            $collaborateURL = 'https://localcontextshub.org/api/v2/notices/open_to_collaborate/';
 
             $this->client->setUri($collaborateURL);
             $this->client->setHeaders(['x-api-key' => $apiKey]);
