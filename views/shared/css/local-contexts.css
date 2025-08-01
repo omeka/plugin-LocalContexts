@@ -61,6 +61,7 @@
 
 .project-link {
     display: block;
+    width: 100%;
     text-align: right !important;
 }
 
@@ -90,7 +91,7 @@ span.lc {
         flex-wrap: wrap;
     }
 
-    footer .local-contexts-notice {
+    footer .local-contexts-project .notice {
         width: 50%;
     }
 }
