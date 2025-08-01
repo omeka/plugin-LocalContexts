@@ -8,18 +8,17 @@ Omeka.LocalContexts = {};
     /**
      * Add link that collapses and expands content.
      */
-    Omeka.LocalContexts.addHideButtons = function () {
-        $('.drawer-contents').each(function () {
-            $(this).hide();
-        });
-        $('.drawer-toggle')
-            .click(function (event) {
-                event.preventDefault();
-                $(this).parent().siblings('.drawer-contents').toggle();
-                $(this).toggleClass('opened');
-            })
-            .mousedown(function (event) {
-                event.stopPropagation();
+    Omeka.LocalContexts.manageDrawerToggleLabels = function () {
+        $('.drawer')
+            .on('omeka:toggle-drawer', '.drawer-toggle', function (event) {
+                var toggleButton = $(this);
+                var expandLabel = toggleButton.data('expand-label');
+                var collapseLabel = toggleButton.data('collapse-label');
+                if (toggleButton.attr('aria-expanded') == 'true') {
+                    toggleButton.attr('aria-label', collapseLabel);
+                } else {
+                    toggleButton.attr('aria-label', expandLabel);
+                }
             });
     };
 })(jQuery);

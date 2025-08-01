@@ -72,6 +72,7 @@ jQuery(document).ready(function () {
 <script>
     Omeka.manageDrawers('#assign-drawer-list', '.local-contexts-multicheckbox-row');
     Omeka.manageDrawers('#remove-drawer-list', '.local-contexts-multicheckbox-row');
+    Omeka.addReadyCallback(Omeka.LocalContexts.manageDrawerToggleLabels);
 </script>
 
 <?php echo foot(); ?>

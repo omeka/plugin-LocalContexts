@@ -1,6 +1,7 @@
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
     Omeka.manageDrawers('#lc-batch-edit-drawer-list', '.local-contexts-multicheckbox-row');
+    Omeka.addReadyCallback(Omeka.LocalContexts.manageDrawerToggleLabels);
 });
 </script>
 <fieldset id="item-local-contexts-fields">

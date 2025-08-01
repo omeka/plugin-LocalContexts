@@ -1,6 +1,7 @@
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
     Omeka.manageDrawers('#lc-item-edit-drawer-list', '.local-contexts-multicheckbox-row');
+    Omeka.addReadyCallback(Omeka.LocalContexts.manageDrawerToggleLabels);
 });
 </script>
 <p class='explanation'><?php echo __('Assign selected Local Contexts value(s) to selected metadata element in selected language(s)'); ?></p>
