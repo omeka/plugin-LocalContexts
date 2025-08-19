@@ -62,6 +62,7 @@ foreach (array_unique($projects, SORT_REGULAR) as $key => $project) {
 <script type="text/javascript" charset="utf-8">
 jQuery(document).ready(function () {
     Omeka.manageDrawers('#lc-config-drawer-list', '.local-contexts-multicheckbox-row');
+    Omeka.addReadyCallback(Omeka.LocalContexts.manageDrawerToggleLabels);
     lcCheckedProjects = <?php echo js_escape($lcCheckedProjects); ?>;
     $.each(lcCheckedProjects, function(key, projectID) {
         $("[value*='" + projectID + "']").attr('checked', 'true');
