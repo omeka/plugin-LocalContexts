@@ -78,12 +78,25 @@ span.lc {
 }
 
 @media screen and (min-width: 1200px) {
+    footer #local-contexts-content {
+        clear: both;
+    }
+
     footer .local-contexts-project {
+        margin-bottom: 2rem;
+    }
+
+    footer .local-contexts-notices {
         display: flex;
         flex-wrap: wrap;
     }
 
-    footer .local-contexts-project .notice {
+    footer .local-contexts-notices .notice {
         width: 50%;
+    }
+
+    footer .local-contexts-project .project-link {
+        width: max-content;
+        float: right;
     }
 }

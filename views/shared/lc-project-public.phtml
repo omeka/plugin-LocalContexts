@@ -1,6 +1,8 @@
+<div class="local-contexts-notices">
 <?php foreach ($projectByImage as $imageUrl => $notices): ?>
     <div class="notice">
 	    <?php echo $this->partial('lc-notice.phtml', ['imageUrl' => $imageUrl, 'notices' => $notices]); ?>
 	</div>
 <?php endforeach; ?>
+</div>
 <a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?></a>
