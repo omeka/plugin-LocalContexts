@@ -69,6 +69,13 @@
     border-bottom: 1px solid #ccc;
 }
 
+.element-text .project-link,
+footer .project-link {
+  display: block;
+  float: right;
+  width: auto;
+}
+
 span.lc {
     font-weight: bold;
 }
