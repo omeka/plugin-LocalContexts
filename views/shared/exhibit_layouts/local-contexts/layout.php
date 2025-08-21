@@ -31,8 +31,6 @@ if ($projectArray) {
 
 <?php if (count($lcArray) > 0): ?>
 <div id="local-contexts-content" class="default">
-    <div class='local-contexts-project'>
-        <?php echo $lcArray['label']; ?>
-    </div>
+    <?php echo $lcArray['label']; ?>
 </div>
 <?php endif; ?>

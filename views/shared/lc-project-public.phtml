@@ -1,8 +1,8 @@
-<div class="local-contexts-notices">
-<?php foreach ($projectByImage as $imageUrl => $notices): ?>
-    <div class="notice">
-	    <?php echo $this->partial('lc-notice.phtml', ['imageUrl' => $imageUrl, 'notices' => $notices]); ?>
+<div class="local-contexts-project">
+	<div class="local-contexts-notices">
+	<?php foreach ($projectByImage as $imageUrl => $notices): ?>
+		<?php echo $this->partial('lc-notice.phtml', ['imageUrl' => $imageUrl, 'notices' => $notices]); ?>
+	<?php endforeach; ?>
 	</div>
-<?php endforeach; ?>
+	<a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?></a>
 </div>
-<a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?></a>
