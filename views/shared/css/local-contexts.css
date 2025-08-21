@@ -65,19 +65,17 @@
     text-align: right !important;
 }
 
-.project-link:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-}
-
 .local-contexts-notices ~ .project-link {
-  width: auto;
-  align-self: flex-end;
+    width: auto;
+    align-self: flex-end;
 }
 
-
-.local-contexts-notices {
+.local-contexts-project {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
 }
 
 .local-contexts-notices .notice {
@@ -85,9 +83,10 @@
     align-self: flex-start;
 }
 
-.local-contexts-notices:not(:last-child) .project-link {
-    margin-bottom: 2rem;
+.local-contexts-notice:not(:last-child) {
+    margin-bottom: 1rem;
 }
+
 
 span.lc {
     font-weight: bold;
@@ -95,6 +94,10 @@ span.lc {
 
 .local-contexts-project select {
     width: 30%;
+}
+
+.local-contexts-options {
+    display: flow-root;
 }
 
 @media screen and (min-width: 1200px) {
@@ -111,7 +114,7 @@ span.lc {
         flex-wrap: wrap;
     }
 
-    footer .local-contexts-notices .notice {
+    footer .local-contexts-notices .local-contexts-notice {
         width: 50%;
     }
 
