@@ -112,6 +112,7 @@ span.lc {
     footer .local-contexts-notices {
         display: flex;
         flex-wrap: wrap;
+        width: 100%;
     }
 
     footer .local-contexts-notices .local-contexts-notice {
