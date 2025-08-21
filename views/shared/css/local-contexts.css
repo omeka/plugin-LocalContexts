@@ -69,11 +69,24 @@
     border-bottom: 1px solid #ccc;
 }
 
-.element-text .project-link,
-footer .project-link {
-  display: block;
-  float: right;
+.local-contexts-notices ~ .project-link {
   width: auto;
+  align-self: flex-end;
+}
+
+
+.local-contexts-notices {
+    display: flex;
+    width: 100%;
+}
+
+.local-contexts-notices .notice {
+    width: 100%;
+    align-self: flex-start;
+}
+
+.local-contexts-notices:not(:last-child) .project-link {
+    margin-bottom: 2rem;
 }
 
 span.lc {
