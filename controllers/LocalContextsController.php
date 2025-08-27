@@ -254,6 +254,10 @@ class LocalContexts_LocalContextsController extends Omeka_Controller_AbstractAct
         // Build new array without removeArray content and save to settings
         $diff = array_diff(array_map('json_encode', $currentLCcontent), array_map('json_encode', $removeArray));
         $newLCcontent = array_map(function ($json) { return json_decode($json, true); }, $diff);
-        set_option('lc_notices', serialize($newLCcontent));
+        if (!empty($newLCcontent)) {
+            set_option('lc_notices', serialize($newLCcontent));
+        } else {
+            delete_option('lc_notices');
+        }
     }
 }
