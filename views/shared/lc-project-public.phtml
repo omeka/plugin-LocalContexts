@@ -4,5 +4,5 @@
 		<?php echo $this->partial('lc-notice.phtml', ['imageUrl' => $imageUrl, 'notices' => $notices]); ?>
 	<?php endforeach; ?>
 	</div>
-	<a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?></a>
+	<a class="project-name project-link" target="_blank" href="<?php echo $projectUrl; ?>"><?php echo $projectTitle; ?> <span class="sr-only"><?php echo __('(external link?'); ?></span>
 </div>
